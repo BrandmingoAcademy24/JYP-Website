@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jagran Youth Parliament 2025</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+   :root {
+  --primary: #3b3c3d;
+  --accent: #f9b900;
+  --highlight: #e46428;
+  --dark: #3b3c3d;
+  --white: #fcfcfc;
+  --light-gray: #f5f6fa;
+}
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--white);
+      color: var(--primary);
+      overflow-x: hidden;
+    }
+
+    /* Navigation Styling */
+    .navbar-wrapper {
+      background-color: var(--white);
+      border-radius: 50px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      padding: 10px 0;
+      margin-top:20px;
+      margin-left:20px;
+      margin-right:20px;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    .navbar-brand {
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 1.5rem;
+    }
+
+    .navbar-nav .nav-link {
+      font-weight: 500;
+      color: var(--dark) !important;
+      margin: 0 10px;
+      transition: 0.3s;
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: var(--accent) !important;
+    }
+
+    .btn-apply {
+      background-color: var(--accent);
+      color: var(--white);
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-weight: 600;
+      transition: 0.3s ease-in-out;
+    }
+
+    .btn-apply:hover {
+      background-color: #e46428;
+      color:#fff;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      padding: 100px 0 80px;
+      background-color: var(--white);
+    }
+
+    .hero-text h1 {
+      font-size: 2.75rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .hero-text h2 {
+      font-size: 1.5rem;
+      color: var(--accent);
+      margin-top: 10px;
+    }
+
+    .hero-text p {
+      margin-top: 20px;
+      font-size: 1.05rem;
+      color: var(--dark);
+    }
+
+    .hero-buttons a {
+      margin-right: 15px;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      min-height: 300px;
+      background-color: #d9e1ec;
+      border-radius: 16px;
+    }
+
+    /* About Section */
+    .about-section {
+      background: var(--light-gray);
+      border-radius: 30px;
+      padding: 60px;
+      margin: 40px;
+    }
+
+    .about-images {
+      display: flex;
+      flex-direction: row;
+      gap: 15px;
+    }
+
+    .about-img-left {
+      width: 50%;
+      background: #d2ddec;
+      border-radius: 16px;
+      height: 300px;
+    }
+
+    .about-img-right {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .about-img-top {
+      height: 180px;
+      background: #ccd4e1;
+      border-radius: 16px;
+    }
+
+    .about-img-bottom {
+      height: 90px;
+      background: #e1e6f0;
+      border-radius: 16px;
+    }
+
+    .about-content h3 {
+      font-weight: 700;
+      font-size: 1.75rem;
+      margin-bottom: 15px;
+    }
+
+    .about-content p {
+      font-size: 1rem;
+      color: var(--dark);
+    }
+
+    /* Mission Section Styles */
+.mission-section {
+  padding: 60px 15px;
+}
+
+.mission-box {
+  background-color: #ffffff;
+  border: 2px solid #e46428;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.mission-heading {
+  color: #0d283f;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.mission-text {
+  color: #1e1e1e;
+  font-size: 1.125rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .mission-box {
+    padding: 1.5rem 1rem;
+  }
+
+  .mission-heading {
+    font-size: 1.25rem;
+  }
+
+  .mission-text {
+    font-size: 1rem;
+  }
+}
+
+   
+    @media (max-width: 768px) {
+      .hero-text h1 {
+        font-size: 2rem;
+      }
+
+      .hero-text h2 {
+        font-size: 1.2rem;
+      }
+
+      .about-images {
+        flex-direction: column;
+      }
+
+      .about-img-left,
+      .about-img-right {
+        width: 100%;
+      }
+    }
+    
+    /* JYP Section Styles */
+.jyp-section {
+  padding: 60px 15px;
+}
+
+.jyp-heading {
+  color: #e46428;
+}
+
+.jyp-box {
+  transition: all 0.3s ease;
+  border: 1px solid #e0e0e0;
+  height: 100%;
+}
+
+.jyp-box:hover {
+  border-color: #e46428;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.jyp-icon i {
+  font-size: 3rem;
+  color: #e46428;
+  transition: color 0.3s ease;
+}
+
+.jyp-box:hover .jyp-icon i {
+  color: #0d283f;
+}
+
+.jyp-step-title {
+  color: #e46428;
+  font-size: 1.25rem;
+}
+
+.jyp-desc {
+  font-size: 1rem;
+  line-height: 1.6;
+  padding: 0 10px;
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+  .jyp-box {
+    padding: 1.5rem 1rem;
+  }
+
+  .jyp-icon i {
+    font-size: 2.2rem;
+  }
+
+  .jyp-step-title {
+    font-size: 1.15rem;
+  }
+
+  .jyp-desc {
+    font-size: 0.95rem;
+  }
+}
+
+ .text-accent {
+  color: #e46428;
+}
+
+@media (max-width: 767.98px) {
+  .container.p-5 {
+    padding: 2rem 1rem !important;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  h5 {
+    font-size: 1.2rem;
+  }
+
+  .list-unstyled li {
+    font-size: 0.95rem;
+  }
+}
+ /* Scoped Timeline Styling */
+#program-flow-section .timeline {
+  position: relative;
+  padding-left: 30px;
+}
+
+#program-flow-section .timeline-block {
+  position: relative;
+}
+
+#program-flow-section .timeline-dot {
+  width: 14px;
+  height: 14px;
+  background-color: #e46428;
+  border-radius: 50%;
+  position: absolute;
+  top: 5px;
+  left: -7px;
+}
+
+#program-flow-section .timeline-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 7px;
+  width: 4px;
+  background-color: #e46428;
+  z-index: -1;
+}
+
+#program-flow-section .timeline-content {
+  margin-left: 30px;
+  padding-left: 10px;
+}
+
+/* Optional Accent Text Color */
+.text-accent {
+  color: #e46428;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 576px) {
+  #program-flow-section .timeline {
+    padding-left: 20px;
+  }
+
+  #program-flow-section .timeline-dot {
+    width: 12px;
+    height: 12px;
+    left: -6px;
+  }
+
+  #program-flow-section .timeline-line {
+    left: 6px;
+  }
+
+  #program-flow-section h2 {
+    font-size: 1.6rem;
+  }
+
+  #program-flow-section h5 {
+    font-size: 1.1rem;
+  }
+}
+ /* CTA Section Styling */
+.cta-section .cta-bg {
+  background: linear-gradient(135deg, #F25022, #FFC300);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-section h2 {
+  font-size: 1.8rem;
+  color: #fff;
+}
+
+.cta-section p {
+  color: #fff;
+  opacity: 0.95;
+}
+
+.btn-apply-now {
+  background: #ffffff;
+  color: #F25022;
+  border-radius: 50px;
+  transition: all 0.3s ease-in-out;
+  font-size: 1rem;
+}
+
+.btn-apply-now:hover {
+  background: #fff3e0;
+  color: #d84315;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+  .cta-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .cta-section p {
+    font-size: 1rem;
+  }
+
+  .btn-apply-now {
+    width: 100%;
+    text-align: center;
+  }
+}
+ 
+ /* Footer Styling */
+.custom-footer {
+  background: linear-gradient(135deg, #0d47a1, #1565c0); /* Blue gradient */
+  color: #f1f1f1;
+  font-size: 0.95rem;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  box-shadow: 0 -2px 25px rgba(0, 0, 0, 0.2);
+}
+
+.custom-footer h5,
+.custom-footer h6 {
+  color: #fff;
+}
+
+.footer-links li {
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  color: #e0e0e0;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #ffc107;
+  text-decoration: underline;
+}
+
+.footer-icon {
+  color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.footer-icon:hover {
+  color: #ffc107;
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .custom-footer {
+    text-align: center;
+  }
+
+  .custom-footer .row > div {
+    padding-bottom: 1rem;
+  }
+
+  .footer-icon {
+    font-size: 1.3rem;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+<!-- NAVIGATION BAR -->
+<div class="navbar-wrapper">
+  <div class="container d-flex justify-content-between align-items-center">
+    <a class="navbar-brand" href="#">JYP</a>
+    <nav class="navbar navbar-expand-lg">
+      <div class="collapse navbar-collapse show">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#program">Program</a></li>
+          <li class="nav-item"><a class="nav-link" href="#eligibility">Eligibility</a></li>
+          <li class="nav-item"><a class="nav-link" href="#blogs">Blogs</a></li>
+          <li class="nav-item"><a class="nav-link" href="#apply">Apply</a></li>
+        </ul>
+      </div>
+    </nav>
+    <a href="https://brandmingoacademy24.github.io/form/" class="btn btn-apply">Apply Now</a>
+  </div>
+</div>
+
+<!-- HERO SECTION -->
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6 hero-text">
+        <h1>Jagran Youth Parliament 2025</h1>
+        <h2>Where Voice Meets Vision</h2>
+        <p>An initiative by Dainik Jagran to foster informed citizenship and develop the next generation of public leaders through structured, high-impact parliamentary simulation.</p>
+        <div class="hero-buttons mt-4">
+          <a href="https://brandmingoacademy24.github.io/form/" class="btn btn-apply">Apply Now</a>
+          <a href="#program" class="btn btn-outline-dark">Explore Program</a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="hero-image"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT SECTION -->
+<section id="about" class="about-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="about-images">
+          <div class="about-img-left"></div>
+          <div class="about-img-right">
+            <div class="about-img-top"></div>
+            <div class="about-img-bottom"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 d-flex align-items-center">
+        <div class="about-content">
+          <h3>About</h3>
+          <p>Jagran Youth Parliament recognizes that India's most complex challenges require fresh perspectives, not recycled solutions. JYP is a platform designed to immerse India's brightest minds in exploring ideas through democratic process. Through structured debates and interactive simulations, JYP builds leadership, develops communication skills, and inspires civic engagement. It is more than a competition—it's a transformative journey into the core of governance..</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION SECTION -->
+<section id="mission" class="mission-section py-5">
+  <div class="container">
+    <div class="mission-box text-center">
+      <h4 class="mission-heading">Our Mission</h4>
+      <p class="mission-text">
+        To empower youth with the knowledge, confidence, and leadership skills to actively engage in India’s democratic process and become the voices of progressive change.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- HOW JYP WORKS SECTION -->
+<section id="program" class="jyp-section py-5 bg-light">
+  <div class="container">
+    <div class="row mb-5 text-center">
+      <div class="col-12">
+        <h2 class="display-5 fw-bold jyp-heading">How JYP Works</h2>
+        <p class="text-muted mt-3 mb-0 fs-5">
+          Experience the structure and depth of real parliamentary simulations designed to shape impactful leaders.
+        </p>
+      </div>
+    </div>
+
+    <div class="row g-4 text-center">
+      <!-- STEP 1 -->
+      <div class="col-md-4">
+        <div class="jyp-box h-100 p-4 bg-white rounded-4 shadow">
+          <div class="jyp-icon mb-3">
+            <i class="bi bi-mic-fill"></i>
+          </div>
+          <h5 class="fw-bold jyp-step-title mb-2">Debate and Collaborate</h5>
+          <p class="text-muted mb-0 jyp-desc">
+            6 minutes paired debates at UG & PG level,<br>
+            topic-based argumentation, judged on articulation and logic.
+          </p>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="col-md-4">
+        <div class="jyp-box h-100 p-4 bg-white rounded-4 shadow">
+          <div class="jyp-icon mb-3">
+            <i class="bi bi-lightbulb-fill"></i>
+          </div>
+          <h5 class="fw-bold jyp-step-title mb-2">Develop Skills</h5>
+          <p class="text-muted mb-0 jyp-desc">
+            30-day online training on critical thinking, policy understanding, teamwork, and diplomacy.
+          </p>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="col-md-4">
+        <div class="jyp-box h-100 p-4 bg-white rounded-4 shadow">
+          <div class="jyp-icon mb-3">
+            <i class="bi bi-person-bounding-box"></i>
+          </div>
+          <h5 class="fw-bold jyp-step-title mb-2">Role Play as Parliamentarians</h5>
+          <p class="text-muted mb-0 jyp-desc">
+            Take roles of MPs & Ministers and engage in real issue debates during 2-day JYP session in Delhi with policymakers.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- PROGRAM FLOW TIMELINE SECTION -->
+<section id="program-flow-section" class="py-5">
+  <div class="container p-4 p-md-5 rounded-4 shadow" style="background-color: #f9f9f9;">
+    <h2 class="fw-bold mb-5 text-center" style="color: #e46428;">Program Flow</h2>
+    <div class="timeline">
+
+      <!-- PHASE 1 -->
+      <div class="timeline-block mb-5">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h5 class="fw-semibold text-primary mb-3">Phase 1</h5>
+          <ul class="list-unstyled mb-0">
+            <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> Choosing a partner for team debate</li>
+            <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> Registration on website</li>
+            <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> Selection of Topic</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PHASE 2 -->
+      <div class="timeline-block mb-5">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h5 class="fw-semibold text-primary mb-3">Phase 2</h5>
+          <ul class="list-unstyled mb-0">
+            <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> UG: Participate in college & inter-college debate</li>
+            <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> PG: Participate in department & interdepartmental debate</li>
+            <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> Winners will be selected by jury</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PHASE 3 -->
+      <div class="timeline-block mb-5">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h5 class="fw-semibold text-primary mb-3">Phase 3</h5>
+          <ul class="list-unstyled mb-0">
+            <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> 15 days training on Parliamentary procedures</li>
+            <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> 15 days training on various Bills and Laws</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PHASE 4 -->
+      <div class="timeline-block">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h5 class="fw-semibold text-primary mb-3">Phase 4</h5>
+          <ul class="list-unstyled mb-0">
+            <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> Selected JYP members to participate in 2-day session in Delhi</li>
+            <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> Debate and discussion in presence of policy makers</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Timeline vertical line -->
+      <div class="timeline-line"></div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ELIGIBILITY SECTION -->
+<section id="eligibility" class="py-5 bg-light">
+  <div class="container">
+    <h3 class="text-center fw-bold mb-5" style="color: #e46428;">Eligibility</h3>
+    <div class="row text-center g-4">
+      
+      <!-- Card 1 -->
+      <div class="col-md-4">
+        <div class="eligibility-card h-100 p-4 rounded-4 shadow bg-white">
+          <div class="icon-wrapper mx-auto mb-3">
+            <i class="bi bi-mortarboard-fill"></i>
+          </div>
+          <h5 class="fw-semibold mb-2">Who Can Apply</h5>
+          <p class="text-muted">Open to Undergraduate and Postgraduate students across India.</p>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="col-md-4">
+        <div class="eligibility-card h-100 p-4 rounded-4 shadow bg-white">
+          <div class="icon-wrapper mx-auto mb-3">
+            <i class="bi bi-people"></i>
+          </div>
+          <h5 class="fw-semibold mb-2">Selection Format</h5>
+          <p class="text-muted">Paired debates on pre-decided motions judged on articulation, logic and collaboration.</p>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="col-md-4">
+        <div class="eligibility-card h-100 p-4 rounded-4 shadow bg-white">
+          <div class="icon-wrapper mx-auto mb-3">
+            <i class="bi bi-trophy"></i>
+          </div>
+          <h5 class="fw-semibold mb-2">Winners</h5>
+          <p class="text-muted">Top teams will proceed to final parliamentary simulations and recognition.</p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+
+<!-- BLOGS SECTION -->
+<section id="blogs" class="py-5 bg-light">
+  <div class="container">
+    <h3 class="text-center fw-bold text-primary mb-5">From Parliament to Perspective</h3>
+    <div class="row g-4">
+      <div class="col-md-3">
+        <div class="bg-white rounded-4 shadow overflow-hidden">
+          <div style="background:#ccddee;height:150px;"></div>
+          <div class="p-3">
+            <h6 class="fw-bold mb-2">Why India Needs Youth in Politics</h6>
+            <p class="text-muted small">Empowering young voices for a better tomorrow.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="bg-white rounded-4 shadow overflow-hidden">
+          <div style="background:#ddeeff;height:150px;"></div>
+          <div class="p-3">
+            <h6 class="fw-bold mb-2">Debate as a Leadership Tool</h6>
+            <p class="text-muted small">Building articulation and logic through structured discussion.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="bg-white rounded-4 shadow overflow-hidden">
+          <div style="background:#e0eaf0;height:150px;"></div>
+          <div class="p-3">
+            <h6 class="fw-bold mb-2">From Campus to Parliament</h6>
+            <p class="text-muted small">Bridging youth energy with governance platforms.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="bg-white rounded-4 shadow overflow-hidden">
+          <div style="background:#f0f4f9;height:150px;"></div>
+          <div class="p-3">
+            <h6 class="fw-bold mb-2">The Future of Indian Democracy</h6>
+            <p class="text-muted small">Perspectives from the new generation of change-makers.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-4">
+      <a href="#" class="btn btn-outline-accent">Browse All Blogs</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section id="apply" class="py-5 cta-section">
+  <div class="container p-5 rounded-4 text-white cta-bg">
+    <div class="row align-items-center">
+      <div class="col-md-8">
+        <h2 class="fw-bold mb-2">Ready to shape the future?</h2>
+        <p class="mb-0 fs-5">Join the Jagran Youth Parliament and let your voice lead the way. Your journey to impact starts here.</p>
+      </div>
+      <div class="col-md-4 text-md-end text-start mt-4 mt-md-0">
+        <a href="https://brandmingoacademy24.github.io/form/" class="btn btn-apply-now px-4 py-2 fw-bold">Apply Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="custom-footer py-5 text-white">
+  <div class="container">
+    <div class="row gy-4">
+      <!-- Brand Info -->
+      <div class="col-md-4">
+        <h5 class="fw-bold mb-3">Jagran Youth Parliament</h5>
+        <p class="text-light">Empowering the voice of youth for a brighter democratic India.</p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="col-md-4">
+        <h6 class="fw-semibold mb-3">Quick Links</h6>
+        <ul class="list-unstyled footer-links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#blogs">Blogs</a></li>
+          <li><a href="#winners">Winners</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+
+      <!-- Support and Socials -->
+      <div class="col-md-4">
+        <h6 class="fw-semibold mb-3">Support</h6>
+        <p class="mb-1"><i class="bi bi-envelope-fill me-2"></i> contact@youthparliament.in</p>
+        <p class="mb-3"><i class="bi bi-whatsapp me-2"></i> +91 99999 88888</p>
+        <div class="d-flex gap-3 fs-5">
+          <a href="#" class="footer-icon"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="footer-icon"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="footer-icon"><i class="bi bi-youtube"></i></a>
+          <a href="#" class="footer-icon"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
