@@ -24,76 +24,240 @@
     }
 
  /* Navigation Styling */
+    /* Container setup */
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Desktop Navbar Menu */
+.navbar-menu {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+/* Horizontal Menu for Desktop */
+.navbar-nav {
+  display: flex;
+  flex-direction: row;   /* fixes vertical stacking */
+  align-items: center;
+  gap: 24px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Fix links spacing and style */
+.navbar-nav .nav-link {
+  color: var(--dark);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--accent);
+}
+
+/* Ensure Apply button on the far right */
+.desktop-apply {
+  display: inline-block;
+}
+
+.mobile-apply {
+  display: none;
+}
+
+/* Hamburger only on mobile */
+.hamburger {
+  display: none;
+}
+
+/* === Responsive === */
+@media (max-width: 991.98px) {
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  .navbar-menu {
+    display: none;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .navbar-menu.active {
+    display: block;
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .desktop-apply {
+    display: none;
+  }
+
+  .mobile-apply {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .mobile-apply .btn-apply {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Wrapper Styles */
 .navbar-wrapper {
   background-color: var(--white);
   border-radius: 50px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  padding: 10px 20px;
+  padding: 12px 24px;
   margin: 20px;
   position: sticky;
   top: 0;
   z-index: 999;
 }
 
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* Brand */
 .navbar-brand {
   font-weight: 700;
   color: var(--primary);
   font-size: 1.5rem;
+  text-decoration: none;
+}
+
+/* Nav Menu */
+.navbar-menu {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-nav {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-nav li {
+  margin-left: 20px;
 }
 
 .navbar-nav .nav-link {
   font-weight: 500;
-  color: var(--dark) !important;
-  margin: 0 10px;
-  transition: 0.3s;
+  color: var(--dark);
+  text-decoration: none;
+  transition: color 0.3s;
 }
 
 .navbar-nav .nav-link:hover {
-  color: var(--accent) !important;
+  color: var(--accent);
 }
 
+/* Buttons */
 .btn-apply {
   background-color: var(--accent);
   color: var(--white);
   border-radius: 8px;
   padding: 8px 18px;
   font-weight: 600;
+  text-decoration: none;
   transition: 0.3s ease-in-out;
 }
 
 .btn-apply:hover {
-  background-color: #e46428;
+  background-color: #e39d00;
   color: #fff;
 }
 
-/* Responsive Styling */
-@media (max-width: 768px) {
-  .navbar-wrapper {
-    margin: 10px;
-    padding: 10px 15px;
-    border-radius: 20px;
+/* Hamburger Styles */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background: var(--primary);
+  transition: 0.3s;
+  border-radius: 2px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 991.98px) {
+  .hamburger {
+    display: flex;
   }
 
-  .navbar-brand {
-    font-size: 1.2rem;
+  .navbar-menu {
+    display: none;
+    width: 100%;
+    margin-top: 20px;
   }
 
-  .navbar-nav {
-    text-align: center;
-  }
-
-  .navbar-nav .nav-link {
-    margin: 8px 0;
+  .navbar-menu.active {
     display: block;
   }
 
-  .btn-apply {
+  .navbar-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .navbar-nav li {
+    margin: 0;
     width: 100%;
-    margin-top: 10px;
+  }
+
+  .navbar-nav .nav-link {
+    display: block;
+    width: 100%;
+    padding: 8px 0;
+  }
+
+  .desktop-apply {
+    display: none;
+  }
+
+  .mobile-apply {
+    display: block;
+    width: 100%;
+  }
+
+  .mobile-apply .btn-apply {
+    width: 100%;
     text-align: center;
   }
 }
 
+@media (min-width: 992px) {
+  .mobile-apply {
+    display: none;
+  }
+}
 
 /* Hero Section */
 .hero-section {
@@ -590,23 +754,38 @@
 <body>
 
 <!-- NAVIGATION BAR -->
+<!-- Navigation Bar -->
 <div class="navbar-wrapper">
-  <div class="container d-flex justify-content-between align-items-center">
+  <div class="container nav-container">
     <a class="navbar-brand" href="#">JYP</a>
-    <nav class="navbar navbar-expand-lg">
-      <div class="collapse navbar-collapse show">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="#program">Program</a></li>
-          <li class="nav-item"><a class="nav-link" href="#eligibility">Eligibility</a></li>
-          <li class="nav-item"><a class="nav-link" href="#blogs">Blogs</a></li>
-          <li class="nav-item"><a class="nav-link" href="#apply">Apply</a></li>
-        </ul>
-      </div>
+
+    <!-- Hamburger Icon -->
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <!-- Nav Links -->
+    <nav class="navbar-menu" id="navbarMenu">
+      <ul class="navbar-nav">
+        <li><a class="nav-link" href="#about">About</a></li>
+        <li><a class="nav-link" href="#program">Program</a></li>
+        <li><a class="nav-link" href="#eligibility">Eligibility</a></li>
+        <li><a class="nav-link" href="#blogs">Blogs</a></li>
+        <li><a class="nav-link" href="#apply">Apply</a></li>
+        <li class="mobile-apply">
+          <a href="https://brandmingoacademy24.github.io/form/" class="btn btn-apply">Apply Now</a>
+        </li>
+      </ul>
     </nav>
-    <a href="https://brandmingoacademy24.github.io/form/" class="btn btn-apply">Apply Now</a>
+
+    <!-- Desktop Apply Button -->
+    <a href="https://brandmingoacademy24.github.io/form/" class="btn btn-apply desktop-apply">Apply Now</a>
   </div>
 </div>
+
+
 
 <!-- HERO SECTION -->
 <section class="hero-section">
@@ -933,4 +1112,15 @@
 </footer>
 
 </body>
+  
+<script>
+  const hamburger = document.getElementById("hamburger");
+  const navbarMenu = document.getElementById("navbarMenu");
+
+  hamburger.addEventListener("click", () => {
+    navbarMenu.classList.toggle("active");
+  });
+</script>
+
+
 </html>
