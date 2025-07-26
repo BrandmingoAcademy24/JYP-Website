@@ -97,6 +97,7 @@
 
 
 /* Hero Section */
+/* Hero Section */
 .hero-section {
   padding: 100px 0 80px;
   background-color: var(--white);
@@ -116,6 +117,7 @@
   font-size: 2.75rem;
   font-weight: 700;
   color: var(--primary);
+  line-height: 1.2;
 }
 
 .hero-text h2 {
@@ -128,22 +130,47 @@
   margin-top: 20px;
   font-size: 1.05rem;
   color: var(--dark);
+  line-height: 1.6;
+}
+
+.hero-buttons {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .hero-buttons a {
-  margin-right: 15px;
+  text-align: center;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 10px;
+  transition: 0.3s ease-in-out;
 }
 
+/* Specific button colors */
+.hero-buttons .btn-primary {
+  background-color: #fbbc05; /* or var(--accent) */
+  color: #fff;
+  border: none;
+}
+
+.hero-buttons .btn-outline {
+  background: transparent;
+  border: 2px solid var(--dark);
+  color: var(--dark);
+}
+
+/* Hero Image */
 .hero-image {
   flex: 1;
   width: 100%;
-  height: 100%;
   min-height: 300px;
   background-color: #d9e1ec;
   border-radius: 16px;
 }
 
-/* Responsive Styling */
+/* Mobile & Tablet Responsive Styling */
 @media (max-width: 768px) {
   .hero-section {
     flex-direction: column;
@@ -161,27 +188,27 @@
 
   .hero-text p {
     font-size: 1rem;
+    padding: 0 10px;
   }
 
   .hero-buttons {
-    display: flex;
     flex-direction: column;
-    gap: 12px;
     align-items: center;
-    margin-top: 20px;
+    width: 100%;
+    gap: 12px;
   }
 
   .hero-buttons a {
-    margin-right: 0;
     width: 100%;
-    max-width: 250px;
+    max-width: 280px;
   }
 
   .hero-image {
-    min-height: 200px;
     width: 100%;
+    min-height: 200px;
   }
 }
+
 
 
 /* About Section */
