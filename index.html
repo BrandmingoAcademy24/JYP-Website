@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jagran Youth Parliament 2025</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
@@ -440,6 +441,97 @@
   }
 }
 
+   /*faq Section*/
+    .jyp-faq-section {
+  background-color: var(--light-gray);
+  padding: 60px 20px;
+}
+
+.jyp-faq-container {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.jyp-faq-heading {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 40px;
+}
+
+.jyp-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.jyp-faq-item {
+  background-color: var(--white);
+  border-left: 4px solid var(--highlight);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.jyp-faq-question {
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  padding: 18px 24px;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--dark);
+  cursor: pointer;
+  position: relative;
+}
+
+.jyp-faq-question::after {
+  content: '+';
+  position: absolute;
+  right: 24px;
+  font-size: 20px;
+  transition: transform 0.3s ease;
+}
+
+.jyp-faq-item.active .jyp-faq-question::after {
+  transform: rotate(45deg);
+}
+
+.jyp-faq-answer {
+  padding: 0 24px 20px;
+  font-size: 15px;
+  color: #555;
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.jyp-faq-item.active .jyp-faq-answer {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 480px) {
+  .jyp-faq-heading {
+    font-size: 22px;
+    margin-bottom: 30px;
+  }
+
+  .jyp-faq-question {
+    font-size: 16px;
+  }
+
+  .jyp-faq-answer {
+    font-size: 14px;
+  }
+}
+
 
     /* Mission Section Styles */
 .mission-section {
@@ -648,6 +740,95 @@
     font-size: 1.1rem;
   }
 }
+    
+/*Notification Section*/
+  .jyp-notification-list-section {
+  padding: 40px 20px;
+  background-color: var(--light-gray);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.jyp-notification-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.jyp-section-heading {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.jyp-notification-list-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.jyp-notification-card {
+  background-color: var(--white);
+  border-left: 4px solid var(--highlight);
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+.jyp-notification-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.jyp-notification-card a {
+  text-decoration: none;
+  color: var(--dark);
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.jyp-notification-card span {
+  display: block;
+  font-size: 14px;
+  margin-top: 8px;
+  color: #777;
+}
+
+.jyp-notification-loadmore-wrapper {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.jyp-loadmore-btn {
+  background-color: var(--highlight);
+  color: var(--white);
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.jyp-loadmore-btn:hover {
+  background-color: var(--accent);
+}
+
+@media (max-width: 480px) {
+  .jyp-section-heading {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  .jyp-notification-card a {
+    font-size: 15px;
+  }
+  .jyp-loadmore-btn {
+    width: 100%;
+  }
+}
+
+    
  /* CTA Section Styling */
 .cta-section .cta-bg {
   background: linear-gradient(135deg, #F25022, #FFC300);
@@ -748,13 +929,173 @@
     font-size: 1.3rem;
   }
 }
+    
+    /*Notification Slider Top*/
+    .jyp-notification-slider {
+    width: 100%;
+    background-color: #fff8f8;
+    border-bottom: 2px solid #c40000;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    z-index: 999;
+    position: relative;
+  }
+
+  .jyp-notification-track {
+    display: flex;
+    white-space: nowrap;
+    animation: jyp-scroll-left 30s linear infinite;
+  }
+
+  .jyp-notification-item {
+    flex: 0 0 auto;
+    padding: 12px 40px;
+    color: #222;
+    font-size: 16px;
+    border-right: 1px solid #e1e1e1;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .jyp-notification-item:hover {
+    background-color: #ffeaea;
+    color: #b30000;
+  }
+
+  @keyframes jyp-scroll-left {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+  }
+
+  @media (max-width: 768px) {
+    .jyp-notification-item {
+      font-size: 14px;
+      padding: 10px 25px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .jyp-notification-item {
+      font-size: 13px;
+      padding: 8px 18px;
+    }
+  }
+
+    
+/* Overlay */
+.jyp-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(59, 60, 61, 0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Modal Content Box */
+.jyp-popup-content {
+  background-color: var(--white);
+  max-width: 420px;
+  width: 90%;
+  padding: 40px 30px 35px;
+  border-radius: 14px;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  border-top: 6px solid var(--highlight);
+  animation: fadeInScale 0.4s ease;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Inner Content */
+.jyp-popup-inner {
+  text-align: center;
+}
+
+.jyp-popup-title {
+  font-size: 24px;
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+
+.jyp-popup-text {
+  font-size: 15.5px;
+  color: #444;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+.jyp-popup-btn {
+  display: inline-block;
+  background-color: var(--highlight);
+  color: var(--white);
+  padding: 11px 26px;
+  font-size: 15px;
+  border-radius: 30px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.jyp-popup-btn:hover {
+  background-color: var(--accent);
+}
+
+/* Close Button */
+.jyp-popup-close {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--primary);
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* Animation */
+@keyframes fadeInScale {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .jyp-popup-content {
+    padding: 30px 20px 25px;
+  }
+
+  .jyp-popup-title {
+    font-size: 20px;
+  }
+
+  .jyp-popup-text {
+    font-size: 14.5px;
+  }
+
+  .jyp-popup-btn {
+    font-size: 14px;
+    padding: 10px 22px;
+  }
+}
+
 
   </style>
 </head>
 <body>
 
 <!-- NAVIGATION BAR -->
-<!-- Navigation Bar -->
 <div class="navbar-wrapper">
   <div class="container nav-container">
     <a class="navbar-brand" href="#">JYP</a>
@@ -772,8 +1113,8 @@
         <li><a class="nav-link" href="#about">About</a></li>
         <li><a class="nav-link" href="#program">Program</a></li>
         <li><a class="nav-link" href="#eligibility">Eligibility</a></li>
-        <li><a class="nav-link" href="#blogs">Blogs</a></li>
-        <li><a class="nav-link" href="#apply">Apply</a></li>
+        <li><a class="nav-link" href="#blogs">Notification</a></li>
+        <li><a class="nav-link" href="#apply">FAQs</a></li>
         <li class="mobile-apply">
           <a href="https://brandmingoacademy24.github.io/form/" class="btn btn-apply">Apply Now</a>
         </li>
@@ -785,6 +1126,33 @@
   </div>
 </div>
 
+ <!-- JYP Notification Slider -->
+<div class="jyp-notification-slider">
+  <div class="jyp-notification-track" id="jypNotificationTrack">
+    
+    <!-- Notification Links (Dummy - Replace href via backend) -->
+    <a href="https://youthparliament.in/register" class="jyp-notification-item" target="_blank">
+      📢 Registrations for Jagran Youth Parliament 2025 are now open!
+    </a>
+    
+    <a href="https://youthparliament.in/event-details" class="jyp-notification-item" target="_blank">
+      🗓️ Event dates: 14th–16th November at Constitution Club, New Delhi.
+    </a>
+
+    <a href="https://youthparliament.in/speakers" class="jyp-notification-item" target="_blank">
+      🎤 Speaker lineup to be revealed soon. Stay tuned!
+    </a>
+
+    <a href="https://youthparliament.in/schedule" class="jyp-notification-item" target="_blank">
+      📄 Download the official event schedule now from the website.
+    </a>
+
+    <a href="https://youthparliament.in/live" class="jyp-notification-item" target="_blank">
+      📺 Watch the live stream of the opening ceremony here!
+    </a>
+
+  </div>
+</div>
 
 
 <!-- HERO SECTION -->
@@ -1010,7 +1378,7 @@
 
 
 <!-- BLOGS SECTION -->
-<section id="blogs" class="py-5 bg-light">
+<!-- <section id="blogs" class="py-5 bg-light">
   <div class="container">
     <h3 class="text-center fw-bold text-primary mb-5">From Parliament to Perspective</h3>
     <div class="row g-4">
@@ -1055,8 +1423,71 @@
       <a href="#" class="btn btn-outline-accent">Browse All Blogs</a>
     </div>
   </div>
+</section> -->
+  
+<!-- Notification Section -->
+<section id="blogs" class="jyp-notification-list-section">
+  <div class="jyp-notification-container">
+    <h2 class="jyp-section-heading">🗞️ Stay Updated: What's New at JYP?</h2>
+
+    <div class="jyp-notification-list-wrapper" id="jypNotificationList">
+      <!-- Notification Cards will be injected here -->
+    </div>
+
+    <div class="jyp-notification-loadmore-wrapper">
+      <button id="loadMoreBtn" class="jyp-loadmore-btn">Load More Notifications</button>
+    </div>
+  </div>
 </section>
 
+  <!-- FAQ Section -->
+<section id="apply" class="jyp-faq-section">
+  <div class="jyp-faq-container">
+    <h2 class="jyp-faq-heading">Frequently Asked Questions</h2>
+
+    <div class="jyp-faq-list">
+
+      <!-- FAQ Item -->
+      <div class="jyp-faq-item">
+        <button class="jyp-faq-question">Who can apply for Jagran Youth Parliament?</button>
+        <div class="jyp-faq-answer">
+          <p>Undergraduate and postgraduate students from across India are eligible to apply.</p>
+        </div>
+      </div>
+
+      <div class="jyp-faq-item">
+        <button class="jyp-faq-question">Is there any registration fee?</button>
+        <div class="jyp-faq-answer">
+          <p>No, there is no registration fee. The event is completely free for selected participants.</p>
+        </div>
+      </div>
+
+      <div class="jyp-faq-item">
+        <button class="jyp-faq-question">What is the event format?</button>
+        <div class="jyp-faq-answer">
+          <p>The event is conducted in a parliamentary debate format based on pre-decided motions judged on articulation, logic, and teamwork.</p>
+        </div>
+      </div>
+
+      <div class="jyp-faq-item">
+        <button class="jyp-faq-question">Will travel or accommodation be provided?</button>
+        <div class="jyp-faq-answer">
+          <p>Basic arrangements for accommodation and travel support may be provided. Details will be shared after selection.</p>
+        </div>
+      </div>
+
+      <div class="jyp-faq-item">
+        <button class="jyp-faq-question">How will I be informed about my selection?</button>
+        <div class="jyp-faq-answer">
+          <p>Selected candidates will receive official communication via email and the participant dashboard on our website.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  
 <!-- CTA SECTION -->
 <section id="apply" class="py-5 cta-section">
   <div class="container p-5 rounded-4 text-white cta-bg">
@@ -1088,7 +1519,7 @@
         <h6 class="fw-semibold mb-3">Quick Links</h6>
         <ul class="list-unstyled footer-links">
           <li><a href="#">Home</a></li>
-          <li><a href="#blogs">Blogs</a></li>
+          <li><a href="#blogs">Notification</a></li>
           <li><a href="#winners">Winners</a></li>
           <li><a href="#">Terms & Conditions</a></li>
           <li><a href="#">Privacy Policy</a></li>
@@ -1096,21 +1527,38 @@
       </div>
 
       <!-- Support and Socials -->
-      <div class="col-md-4">
-        <h6 class="fw-semibold mb-3">Support</h6>
-        <p class="mb-1"><i class="bi bi-envelope-fill me-2"></i> contact@youthparliament.in</p>
-        <p class="mb-3"><i class="bi bi-whatsapp me-2"></i> +91 99999 88888</p>
-        <div class="d-flex gap-3 fs-5">
-          <a href="#" class="footer-icon"><i class="bi bi-facebook"></i></a>
-          <a href="#" class="footer-icon"><i class="bi bi-instagram"></i></a>
-          <a href="#" class="footer-icon"><i class="bi bi-youtube"></i></a>
-          <a href="#" class="footer-icon"><i class="bi bi-linkedin"></i></a>
-        </div>
-      </div>
-    </div>
+    <div class="col-md-4">
+  <h6 class="fw-semibold mb-3">Support</h6>
+  <p class="mb-1"><i class="fa-solid fa-envelope me-2"></i> contact@youthparliament.in</p>
+  <p class="mb-3"><i class="fa-brands fa-whatsapp me-2"></i> +91 99999 88888</p>
+  <div class="d-flex gap-3 fs-5">
+    <a href="#" class="footer-icon"><i class="fa-brands fa-facebook-f"></i></a>
+    <a href="#" class="footer-icon"><i class="fa-brands fa-instagram"></i></a>
+    <a href="#" class="footer-icon"><i class="fa-brands fa-youtube"></i></a>
+    <a href="#" class="footer-icon"><i class="fa-brands fa-linkedin-in"></i></a>
+  </div>
+</div>
+
   </div>
 </footer>
 
+<div id="jyp-popup" class="jyp-popup-overlay">
+  <div class="jyp-popup-content">
+    <button class="jyp-popup-close" onclick="closePopup()">×</button>
+    <div class="jyp-popup-inner">
+      <h3 class="jyp-popup-title">📣 Registrations Now Open!</h3>
+      <p class="jyp-popup-text">
+        Be a part of India’s largest youth-led political forum.<br />
+        Enroll now and step into a world of ideas, debates, and leadership.
+      </p>
+      <a href="#apply" class="jyp-popup-btn">Apply Now</a>
+    </div>
+  </div>
+</div>
+
+
+
+  
 </body>
   
 <script>
@@ -1120,6 +1568,152 @@
   hamburger.addEventListener("click", () => {
     navbarMenu.classList.toggle("active");
   });
+  
+    // Example: Dynamically pushing new notifications (simulate backend)
+  setTimeout(() => {
+    const track = document.getElementById('jypNotificationTrack');
+    const newItem = document.createElement('a');
+    newItem.href = 'https://youthparliament.in/photos';
+    newItem.className = 'jyp-notification-item';
+    newItem.target = '_blank';
+    newItem.textContent = '📸 Photo Gallery 2024 now available — relive the moments!';
+    track.appendChild(newItem.cloneNode(true)); // Repeat to preserve loop animation
+    track.appendChild(newItem);
+  }, 6000);
+  
+  // Notification section
+  const notifications = [
+    {
+      message: '📢 Registrations for Jagran Youth Parliament 2025 are now open!',
+      url: 'https://youthparliament.in/register',
+      date: '1st Aug 2025'
+    },
+    {
+      message: '🗓️ Event dates: 14th–16th November at Constitution Club, New Delhi.',
+      url: 'https://youthparliament.in/event-details',
+      date: '30th Jul 2025'
+    },
+    {
+      message: '🎤 Speaker lineup to be revealed soon. Stay tuned!',
+      url: 'https://youthparliament.in/speakers',
+      date: '29th Jul 2025'
+    },
+    {
+      message: '📄 Download the official event schedule now.',
+      url: 'https://youthparliament.in/schedule',
+      date: '28th Jul 2025'
+    },
+    {
+      message: '📺 Watch the live stream of the opening ceremony here!',
+      url: 'https://youthparliament.in/live',
+      date: '27th Jul 2025'
+    },
+    {
+      message: '📸 Photo Gallery 2024 now available — relive the moments!',
+      url: 'https://youthparliament.in/photos',
+      date: '26th Jul 2025'
+    },
+    {
+      message: '📰 Media Coverage: JYP featured in national dailies.',
+      url: 'https://youthparliament.in/press',
+      date: '25th Jul 2025'
+    },
+    {
+      message: '👥 Meet your fellow delegates – join our community group.',
+      url: 'https://youthparliament.in/community',
+      date: '24th Jul 2025'
+    },
+    {
+      message: '🚌 Free bus transport from Delhi Metro stations on event days.',
+      url: 'https://youthparliament.in/transport',
+      date: '23rd Jul 2025'
+    },
+    {
+      message: '🎟️ Passes for final day will be emailed to registered users.',
+      url: 'https://youthparliament.in/passes',
+      date: '22nd Jul 2025'
+    },
+    {
+      message: '🚨 Emergency Update: Briefing sessions rescheduled.',
+      url: 'https://youthparliament.in/briefing',
+      date: '21st Jul 2025'
+    },
+    {
+      message: '💼 Volunteer opportunities now open for JYP 2025.',
+      url: 'https://youthparliament.in/volunteer',
+      date: '20th Jul 2025'
+    },
+  ];
+
+  let visibleCount = 6;
+
+  function renderNotifications() {
+    const listContainer = document.getElementById('jypNotificationList');
+    listContainer.innerHTML = '';
+
+    for (let i = 0; i < visibleCount && i < notifications.length; i++) {
+      const item = notifications[i];
+      const card = document.createElement('div');
+      card.className = 'jyp-notification-card';
+      card.innerHTML = `
+        <a href="${item.url}" target="_blank">${item.message}</a>
+        <span>${item.date}</span>
+      `;
+      listContainer.appendChild(card);
+    }
+
+    const loadBtn = document.getElementById('loadMoreBtn');
+    if (visibleCount >= notifications.length) {
+      loadBtn.style.display = 'none';
+    } else {
+      loadBtn.style.display = 'inline-block';
+    }
+  }
+
+  document.getElementById('loadMoreBtn').addEventListener('click', () => {
+    visibleCount += 3;
+    renderNotifications();
+  });
+
+  // Initial render
+  renderNotifications();
+
+  // Simulate new notification push after 5 seconds
+  setTimeout(() => {
+    notifications.unshift({
+      message: '🆕 Last Minute Addition: Special guest panel on India@2047 announced!',
+      url: 'https://youthparliament.in/india2047',
+      date: '1st Aug 2025'
+    });
+    renderNotifications();
+  }, 5000);
+  
+ 
+  document.querySelectorAll('.jyp-faq-question').forEach(button => {
+    button.addEventListener('click', () => {
+      const faqItem = button.parentElement;
+      faqItem.classList.toggle('active');
+    });
+  });
+
+ 
+ // Show popup after 3sec
+  document.addEventListener("DOMContentLoaded", () => {
+    const popup = document.getElementById("jyp-popup");
+
+    // Show after 3 seconds (3000 ms)
+    setTimeout(() => {
+      if (!sessionStorage.getItem("jypPopupShown")) {
+        popup.style.display = "flex";
+        sessionStorage.setItem("jypPopupShown", "true");
+      }
+    }, 3000); // Change delay here if needed
+  });
+
+  function closePopup() {
+    document.getElementById("jyp-popup").style.display = "none";
+  }
+
 </script>
 
 
