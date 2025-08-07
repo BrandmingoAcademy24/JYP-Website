@@ -67,10 +67,13 @@
 /* Ensure Apply button on the far right */
 .desktop-apply {
   display: inline-block;
+  background: linear-gradient(135deg, #f85a1b, #fda93f);
 }
 
 .mobile-apply {
   display: none;
+  background: linear-gradient(135deg, #f85a1b, #fda93f);
+  border-radius:50px;
 }
 
 /* Hamburger only on mobile */
@@ -105,6 +108,7 @@
 
   .desktop-apply {
     display: none;
+    background: linear-gradient(135deg, #f85a1b, #fda93f);
   }
 
   .mobile-apply {
@@ -116,6 +120,8 @@
   .mobile-apply .btn-apply {
     width: 100%;
     text-align: center;
+    background: linear-gradient(135deg, #f85a1b, #fda93f);
+    border-radius:50px;
   }
 }
 
@@ -176,13 +182,13 @@
 
 /* Buttons */
 .btn-apply {
-  background-color: var(--accent);
   color: var(--white);
   border-radius: 8px;
   padding: 8px 18px;
   font-weight: 600;
   text-decoration: none;
   transition: 0.3s ease-in-out;
+  background: linear-gradient(135deg, #f85a1b, #fda93f);
 }
 
 .btn-apply:hover {
@@ -301,12 +307,17 @@
 .hero-image {
   flex: 1;
   width: 100%;
-  height: 100%;
-  margin-top:30px;
+  height: auto;
   min-height: 300px;
-  background-color: #d9e1ec;
   border-radius: 16px;
+  background-image: url('https://i.ibb.co/DHmvWb3k/First-section.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
+
 
 /* Responsive Styling */
 @media (max-width: 768px) {
@@ -334,6 +345,7 @@
     gap: 12px;
     align-items: center;
     margin-top: 20px;
+    margin-bottom:20px;
   }
 
   .hero-buttons a {
@@ -365,13 +377,18 @@
 }
 
 .about-img-left {
-  width: 50%;
-  background: #d2ddec;
-  border-radius: 16px;
+  width: 100%;
   height: 300px;
+  border-radius: 16px;
+  background-image: url('https://i.ibb.co/XZHBfPzp/1ed9b797c085c087835a5302e481171feedf36e5-1.png'); /* Replace with your actual image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
 }
 
-.about-img-right {
+
+/*.about-img-right {
   width: 50%;
   display: flex;
   flex-direction: column;
@@ -380,16 +397,21 @@
 
 .about-img-top {
   height: 180px;
-  background: #ccd4e1;
   border-radius: 16px;
+  background-image: url('https://i.ibb.co/G3GR0sCK/image-8.png'); 
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
 }
+
 
 .about-img-bottom {
   height: 90px;
   background: #e1e6f0;
   border-radius: 16px;
 }
-
+Replace with real image */
+    
 .about-content h3 {
   font-weight: 700;
   font-size: 1.75rem;
@@ -533,7 +555,7 @@
 }
 
 
-    /* Mission Section Styles */
+    /*Our Mission Section Styles */
 .mission-section {
   padding: 60px 15px;
 }
@@ -676,7 +698,7 @@
     font-size: 0.95rem;
   }
 }
- /* Scoped Timeline Styling */
+ /* Scoped Timeline Styling - Program Flow */
 #program-flow-section .timeline {
   position: relative;
   padding-left: 30px;
@@ -862,6 +884,9 @@
 }
 
 @media (max-width: 768px) {
+  .cta-section{
+    padding:30px;
+  }
   .cta-section h2 {
     font-size: 1.5rem;
   }
@@ -876,9 +901,120 @@
   }
 }
  
+/* === ELIGIBILITY MODERN CARDS — UNIFORM RESPONSIVE === */
+
+/* Card container */
+.eligibility-gradient-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 30px 30px 30px;
+  border-radius: 30px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  color: #fff;
+  height: 100%;
+  text-align: left;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+/* Backgrounds */
+.eligibility-orange {
+  background: linear-gradient(135deg, #f85a1b, #fda93f);
+}
+
+.eligibility-yellow {
+  background: linear-gradient(135deg, #fda93f, #ffde7b);
+}
+
+/* Text block */
+.eligibility-text {
+  position: relative;
+  z-index: 2;
+  max-width: 60%;
+}
+
+/* Headline */
+.eligibility-gradient-card h5 {
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+/* Description */
+.eligibility-gradient-card p {
+  font-size: 1rem;
+  margin-bottom: 0;
+  color: #fff;
+}
+
+/* Image container */
+.eligibility-img {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  height: 100%;
+  pointer-events: none;
+}
+
+.eligibility-icon-img {
+  max-width: 160px;
+  height: auto;
+}
+
+/* === Responsive Design — maintain layout === */
+
+@media (max-width: 991px) {
+  .eligibility-text {
+    max-width: 100%;
+  }
+
+  .eligibility-icon-img {
+    max-width: 130px;
+  }
+}
+
+@media (max-width: 767px) {
+  .eligibility-gradient-card {
+    padding: 30px 20px 100px;
+  }
+
+  .eligibility-text {
+    max-width: 100%;
+    text-align: left;
+  }
+
+  .eligibility-img {
+    right: 0;
+    transform: none;
+  }
+
+  .eligibility-icon-img {
+    max-width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .eligibility-gradient-card {
+    padding: 25px 15px 90px;
+    border-radius: 20px;
+  }
+
+  .eligibility-icon-img {
+    max-width: 85px;
+  }
+}
+
+    
  /* Footer Styling */
 .custom-footer {
-  background: linear-gradient(135deg, #0d47a1, #1565c0); /* Blue gradient */
+ background: linear-gradient(135deg, #f85a1b, #fda93f);
   color: #f1f1f1;
   font-size: 0.95rem;
   border-top-left-radius: 30px;
@@ -896,13 +1032,13 @@
 }
 
 .footer-links a {
-  color: #e0e0e0;
+  color: #fefefe;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .footer-links a:hover {
-  color: #ffc107;
+  color: #eee;
   text-decoration: underline;
 }
 
@@ -912,11 +1048,24 @@
 }
 
 .footer-icon:hover {
-  color: #ffc107;
+  color: #171717;
   transform: scale(1.1);
+  
 }
 
 @media (max-width: 768px) {
+  .custom-footer .row > div:last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .custom-footer .d-flex.gap-3.fs-5 {
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  
   .custom-footer {
     text-align: center;
   }
@@ -1098,7 +1247,10 @@
 <!-- NAVIGATION BAR -->
 <div class="navbar-wrapper">
   <div class="container nav-container">
-    <img class="navbar-brand" src="https://drive.google.com/file/d/1ib4LfwojLKGknNTAsTF-LRUKwksc5kTr/view?usp=sharing">JYP</img>
+    <a class="navbar-brand" href="#">
+  <img src="https://i.ibb.co/G3GR0sCK/image-8.png" alt="JYP Logo" style="height: 70px;">
+</a>
+
 
     <!-- Hamburger Icon -->
     <div class="hamburger" id="hamburger">
@@ -1183,8 +1335,8 @@
         <div class="about-images">
           <div class="about-img-left"></div>
           <div class="about-img-right">
-            <div class="about-img-top"></div>
-            <div class="about-img-bottom"></div>
+<!--             <div class="about-img-top"></div> -->
+<!--             <div class="about-img-bottom"></div> -->
           </div>
         </div>
       </div>
@@ -1333,47 +1485,54 @@
 
 
 <!-- ELIGIBILITY SECTION -->
-<section id="eligibility" class="py-5 bg-light">
+<section id="eligibility" class="py-5">
   <div class="container">
     <h3 class="text-center fw-bold mb-5" style="color: #e46428;">Eligibility</h3>
-    <div class="row text-center g-4">
-      
-      <!-- Card 1 -->
+    <div class="row text-center g-4 justify-content-center">
+
+      <!-- Card 1: Who Can Apply -->
       <div class="col-md-4">
-        <div class="eligibility-card h-100 p-4 rounded-4 shadow bg-white">
-          <div class="icon-wrapper mx-auto mb-3">
-            <i class="bi bi-mortarboard-fill"></i>
+        <div class="eligibility-gradient-card eligibility-orange">
+          <div class="eligibility-text">
+            <h5>Who Can Apply</h5>
+            <p>Open to Undergraduate and Postgraduate students across India.</p>
           </div>
-          <h5 class="fw-semibold mb-2">Who Can Apply</h5>
-          <p class="text-muted">Open to Undergraduate and Postgraduate students across India.</p>
+          <div class="eligibility-img">
+            <img src="https://i.ibb.co/5ghsGkHD/Who-Can-Apply.png" alt="Megaphone Icon" class="eligibility-icon-img">
+          </div>
         </div>
       </div>
 
-      <!-- Card 2 -->
+      <!-- Card 2: Selection Format -->
       <div class="col-md-4">
-        <div class="eligibility-card h-100 p-4 rounded-4 shadow bg-white">
-          <div class="icon-wrapper mx-auto mb-3">
-            <i class="bi bi-people"></i>
+        <div class="eligibility-gradient-card eligibility-yellow">
+          <div class="eligibility-text">
+            <h5>Selection Format</h5>
+            <p>Paired debates on pre-decided motions judged on articulation, logic and collaboration.</p>
           </div>
-          <h5 class="fw-semibold mb-2">Selection Format</h5>
-          <p class="text-muted">Paired debates on pre-decided motions judged on articulation, logic and collaboration.</p>
+          <div class="eligibility-img">
+            <img src="https://i.ibb.co/cc5Vssjy/Selection-Format.png" alt="Debate Icon" class="eligibility-icon-img">
+          </div>
         </div>
       </div>
 
-      <!-- Card 3 -->
+      <!-- Card 3: Winners -->
       <div class="col-md-4">
-        <div class="eligibility-card h-100 p-4 rounded-4 shadow bg-white">
-          <div class="icon-wrapper mx-auto mb-3">
-            <i class="bi bi-trophy"></i>
+        <div class="eligibility-gradient-card eligibility-orange">
+          <div class="eligibility-text">
+            <h5>Winners</h5>
+            <p>Top teams will proceed to final parliamentary simulations and recognition.</p>
           </div>
-          <h5 class="fw-semibold mb-2">Winners</h5>
-          <p class="text-muted">Top teams will proceed to final parliamentary simulations and recognition.</p>
+          <div class="eligibility-img">
+            <img src="https://i.ibb.co/sdYqsK8K/Winners.png" alt="Speaker Icon" class="eligibility-icon-img">
+          </div>
         </div>
       </div>
-      
+
     </div>
   </div>
 </section>
+
 
 
 
