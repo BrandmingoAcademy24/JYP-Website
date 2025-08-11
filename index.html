@@ -380,7 +380,7 @@
   width: 100%;
   height: 300px;
   border-radius: 16px;
-  background-image: url('https://i.ibb.co/XZHBfPzp/1ed9b797c085c087835a5302e481171feedf36e5-1.png'); /* Replace with your actual image */
+  background-image: url('https://i.ibb.co/KjB7xBvj/About-us.jpg'); /* Replace with your actual image */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -626,13 +626,15 @@ Replace with real image */
 }
 
 .jyp-box {
+  background: linear-gradient(135deg, #F25022, #FFC300);
   transition: all 0.3s ease;
   border: 1px solid #e0e0e0;
   height: 100%;
+  
 }
 
 .jyp-box:hover {
-  border-color: #e46428;
+  border:4px solid #fff;
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
@@ -648,14 +650,16 @@ Replace with real image */
 }
 
 .jyp-step-title {
-  color: #e46428;
+  color:#fff;
   font-size: 1.25rem;
 }
 
 .jyp-desc {
+  color:#f8f8f5;
   font-size: 1rem;
   line-height: 1.6;
   padding: 0 10px;
+  
 }
 
 /* Responsive */
@@ -767,7 +771,6 @@ Replace with real image */
   .jyp-notification-list-section {
   padding: 40px 20px;
   background-color: var(--light-gray);
-  font-family: 'Segoe UI', sans-serif;
 }
 
 .jyp-notification-container {
@@ -1083,9 +1086,8 @@ Replace with real image */
     .jyp-notification-slider {
     width: 100%;
     background-color: #fff8f8;
-    border-bottom: 2px solid #c40000;
+    border-bottom: 2px solid linear-gradient(135deg, #f85a1b, #fda93f);
     overflow: hidden;
-    font-family: 'Segoe UI', sans-serif;
     z-index: 999;
     position: relative;
   }
@@ -1110,8 +1112,8 @@ Replace with real image */
   }
 
   .jyp-notification-item:hover {
-    background-color: #ffeaea;
-    color: #b30000;
+    background: linear-gradient(135deg, #f85a1b, #fda93f);
+    color: #fff;
   }
 
   @keyframes jyp-scroll-left {
@@ -1159,7 +1161,6 @@ Replace with real image */
   box-shadow: 0 10px 40px rgba(0,0,0,0.2);
   border-top: 6px solid var(--highlight);
   animation: fadeInScale 0.4s ease;
-  font-family: 'Segoe UI', sans-serif;
 }
 
 /* Inner Content */
@@ -1239,6 +1240,46 @@ Replace with real image */
   }
 }
 
+    /* === Program Flow Section: side image layout === */
+#program-flow-section .program-flow-layout {
+  display: grid;
+  grid-template-columns: 1fr minmax(240px, 420px);
+  gap: 24px;
+  align-items: start;
+}
+
+/* Image container */
+#program-flow-section .timeline-side-image {
+  display: block;
+}
+
+#program-flow-section .timeline-side-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 16px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  object-fit: cover;
+  aspect-ratio: 9 / 16;
+}
+
+/* Responsive: stack on tablets & phones */
+@media (max-width: 991.98px) {
+  #program-flow-section .program-flow-layout {
+    grid-template-columns: 1fr;
+  }
+  #program-flow-section .timeline-side-image {
+    margin-top: 16px;
+  }
+}
+
+/* On very small phones */
+@media (max-width: 420px) {
+  #program-flow-section .timeline-side-image img {
+    aspect-ratio: auto;
+  }
+}
+
 
   </style>
 </head>
@@ -1248,7 +1289,7 @@ Replace with real image */
 <div class="navbar-wrapper">
   <div class="container nav-container">
     <a class="navbar-brand" href="#">
-  <img src="https://i.ibb.co/G3GR0sCK/image-8.png" alt="JYP Logo" style="height: 70px;">
+  <img src="https://i.ibb.co/G3GR0sCK/image-8.png" alt="JYP Logo" style="height: 90px;">
 </a>
 
 
@@ -1288,19 +1329,19 @@ Replace with real image */
     </a>
     
     <a href="https://youthparliament.in/event-details" class="jyp-notification-item" target="_blank">
-      🗓️ Event dates: 14th–16th November at Constitution Club, New Delhi.
+      ⌛ Last day of the registration is 31<sup>st</sup> August 2025.
     </a>
 
     <a href="https://youthparliament.in/speakers" class="jyp-notification-item" target="_blank">
-      🎤 Speaker lineup to be revealed soon. Stay tuned!
+      🤵 Debate will start from 10<sup>th</sup> September 2025.
     </a>
 
     <a href="https://youthparliament.in/schedule" class="jyp-notification-item" target="_blank">
-      📄 Download the official event schedule now from the website.
+      📄 Jagran Youth Parliament will conducted on January 2026.
     </a>
 
     <a href="https://youthparliament.in/live" class="jyp-notification-item" target="_blank">
-      📺 Watch the live stream of the opening ceremony here!
+      🏆 All the winners will be shared at universities/college level!
     </a>
 
   </div>
@@ -1313,7 +1354,7 @@ Replace with real image */
     <div class="row align-items-center">
       <div class="col-md-6 hero-text">
         <h1>Jagran Youth Parliament 2025</h1>
-        <h2>Where Voice Meets Vision</h2>
+        <h2>The Moment You Step up,<br>India Steps Forward</h2>
         <p>An initiative by Dainik Jagran to foster informed citizenship and develop the next generation of public leaders through structured, high-impact parliamentary simulation.</p>
         <div class="hero-buttons mt-4">
           <a href="https://brandmingoacademy24.github.io/form/" class="btn btn-apply">Apply Now</a>
@@ -1331,7 +1372,15 @@ Replace with real image */
 <section id="about" class="about-section">
   <div class="container">
     <div class="row">
-      <div class="col-md-6">
+    
+      <div class="col-md-6 d-flex align-items-center">
+        <div class="about-content">
+          <h3>About</h3>
+          <p>Jagran Youth Parliament recognizes that India's most complex challenges require fresh perspectives, not recycled solutions. JYP is a platform designed to immerse India's brightest minds in exploring ideas through democratic process. Through structured debates and interactive simulations, JYP builds leadership, develops communication skills, and inspires civic engagement.</p>
+        </div>
+      </div>
+      
+        <div class="col-md-6">
         <div class="about-images">
           <div class="about-img-left"></div>
           <div class="about-img-right">
@@ -1340,12 +1389,7 @@ Replace with real image */
           </div>
         </div>
       </div>
-      <div class="col-md-6 d-flex align-items-center">
-        <div class="about-content">
-          <h3>About</h3>
-          <p>Jagran Youth Parliament recognizes that India's most complex challenges require fresh perspectives, not recycled solutions. JYP is a platform designed to immerse India's brightest minds in exploring ideas through democratic process. Through structured debates and interactive simulations, JYP builds leadership, develops communication skills, and inspires civic engagement. It is more than a competition—it's a transformative journey into the core of governance..</p>
-        </div>
-      </div>
+      
     </div>
   </div>
 </section>
@@ -1383,7 +1427,7 @@ Replace with real image */
             <i class="bi bi-mic-fill"></i>
           </div>
           <h5 class="fw-bold jyp-step-title mb-2">Debate and Collaborate</h5>
-          <p class="text-muted mb-0 jyp-desc">
+          <p class=" mb-0 jyp-desc">
             6 minutes paired debates at UG & PG level,<br>
             topic-based argumentation, judged on articulation and logic.
           </p>
@@ -1397,7 +1441,7 @@ Replace with real image */
             <i class="bi bi-lightbulb-fill"></i>
           </div>
           <h5 class="fw-bold jyp-step-title mb-2">Develop Skills</h5>
-          <p class="text-muted mb-0 jyp-desc">
+          <p class=" mb-0 jyp-desc">
             30-day online training on critical thinking, policy understanding, teamwork, and diplomacy.
           </p>
         </div>
@@ -1410,7 +1454,7 @@ Replace with real image */
             <i class="bi bi-person-bounding-box"></i>
           </div>
           <h5 class="fw-bold jyp-step-title mb-2">Role Play as Parliamentarians</h5>
-          <p class="text-muted mb-0 jyp-desc">
+          <p class="mb-0 jyp-desc">
             Take roles of MPs & Ministers and engage in real issue debates during 2-day JYP session in Delhi with policymakers.
           </p>
         </div>
@@ -1424,60 +1468,76 @@ Replace with real image */
 <section id="program-flow-section" class="py-5">
   <div class="container p-4 p-md-5 rounded-4 shadow" style="background-color: #f9f9f9;">
     <h2 class="fw-bold mb-5 text-center" style="color: #e46428;">Program Flow</h2>
-    <div class="timeline">
 
-      <!-- PHASE 1 -->
-      <div class="timeline-block mb-5">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <h5 class="fw-semibold text-primary mb-3">Phase 1</h5>
-          <ul class="list-unstyled mb-0">
-            <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> Choosing a partner for team debate</li>
-            <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> Registration on website</li>
-            <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> Selection of Topic</li>
-          </ul>
+    <!-- Layout Wrapper -->
+    <div class="program-flow-layout">
+
+      <!-- Timeline -->
+      <div class="timeline">
+
+        <!-- PHASE 1 -->
+        <div class="timeline-block mb-5">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h5 class="fw-semibold text-primary mb-3">Phase 1</h5>
+            <ul class="list-unstyled mb-0">
+              <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> Choosing a partner for team debate</li>
+              <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> Registration on website</li>
+              <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> Selection of Topic</li>
+            </ul>
+          </div>
         </div>
+
+        <!-- PHASE 2 -->
+        <div class="timeline-block mb-5">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h5 class="fw-semibold text-primary mb-3">Phase 2</h5>
+            <ul class="list-unstyled mb-0">
+              <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> UG: Participate in college & inter-college debate</li>
+              <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> PG: Participate in department & interdepartmental debate</li>
+              <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> Winners will be selected by jury</li>
+              <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> Only winners will be eligible to be the part of JYP</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- PHASE 3 -->
+        <div class="timeline-block mb-5">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h5 class="fw-semibold text-primary mb-3">Phase 3</h5>
+            <ul class="list-unstyled mb-0">
+              <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> 15 days training on Parliamentary procedures</li>
+              <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> 15 days training on various Bills and Laws</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- PHASE 4 -->
+        <div class="timeline-block">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h5 class="fw-semibold text-primary mb-3">Phase 4</h5>
+            <ul class="list-unstyled mb-0">
+              <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> Selected JYP members to participate in 2-day session in Delhi</li>
+              <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> Debate and discussion in presence of policy makers</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Timeline vertical line -->
+        <div class="timeline-line"></div>
       </div>
 
-      <!-- PHASE 2 -->
-      <div class="timeline-block mb-5">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <h5 class="fw-semibold text-primary mb-3">Phase 2</h5>
-          <ul class="list-unstyled mb-0">
-            <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> UG: Participate in college & inter-college debate</li>
-            <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> PG: Participate in department & interdepartmental debate</li>
-            <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> Winners will be selected by jury</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- PHASE 3 -->
-      <div class="timeline-block mb-5">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <h5 class="fw-semibold text-primary mb-3">Phase 3</h5>
-          <ul class="list-unstyled mb-0">
-            <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> 15 days training on Parliamentary procedures</li>
-            <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> 15 days training on various Bills and Laws</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- PHASE 4 -->
-      <div class="timeline-block">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <h5 class="fw-semibold text-primary mb-3">Phase 4</h5>
-          <ul class="list-unstyled mb-0">
-            <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> Selected JYP members to participate in 2-day session in Delhi</li>
-            <li class="mb-2"><i class="bi bi-chevron-right me-2 text-accent"></i> Debate and discussion in presence of policy makers</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Timeline vertical line -->
-      <div class="timeline-line"></div>
+      <!-- Side Image -->
+      <aside class="timeline-side-image" aria-hidden="true">
+        <img
+          src="https://i.ibb.co/GQtNb7kB/Image-1080-by-1920.png"
+          alt="Program flow illustration"
+          loading="lazy"
+        />
+      </aside>
     </div>
   </div>
 </section>
@@ -1491,11 +1551,11 @@ Replace with real image */
     <div class="row text-center g-4 justify-content-center">
 
       <!-- Card 1: Who Can Apply -->
-      <div class="col-md-4">
+      <div class="col-md-6" style="">
         <div class="eligibility-gradient-card eligibility-orange">
           <div class="eligibility-text">
-            <h5>Who Can Apply</h5>
-            <p>Open to Undergraduate and Postgraduate students across India.</p>
+<!--             <h5>Who Can Apply</h5> -->
+            <h4>Open to Undergraduate and Postgraduate students across India.</h4>
           </div>
           <div class="eligibility-img">
             <img src="https://i.ibb.co/5ghsGkHD/Who-Can-Apply.png" alt="Megaphone Icon" class="eligibility-icon-img">
@@ -1504,7 +1564,7 @@ Replace with real image */
       </div>
 
       <!-- Card 2: Selection Format -->
-      <div class="col-md-4">
+<!--       <div class="col-md-4">
         <div class="eligibility-gradient-card eligibility-yellow">
           <div class="eligibility-text">
             <h5>Selection Format</h5>
@@ -1514,10 +1574,10 @@ Replace with real image */
             <img src="https://i.ibb.co/cc5Vssjy/Selection-Format.png" alt="Debate Icon" class="eligibility-icon-img">
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- Card 3: Winners -->
-      <div class="col-md-4">
+<!--       <div class="col-md-4">
         <div class="eligibility-gradient-card eligibility-orange">
           <div class="eligibility-text">
             <h5>Winners</h5>
@@ -1527,7 +1587,7 @@ Replace with real image */
             <img src="https://i.ibb.co/sdYqsK8K/Winners.png" alt="Speaker Icon" class="eligibility-icon-img">
           </div>
         </div>
-      </div>
+      </div> -->
 
     </div>
   </div>
@@ -1631,7 +1691,7 @@ Replace with real image */
       <div class="jyp-faq-item">
         <button class="jyp-faq-question">Will travel or accommodation be provided?</button>
         <div class="jyp-faq-answer">
-          <p>Basic arrangements for accommodation and travel support may be provided. Details will be shared after selection.</p>
+          <p>Winners will be selected in inter college & university debate format based on pre-decided motions judge on articulation, logic, and teamwork. Winning participants will be eligible for jagran youth parliament.</p>
         </div>
       </div>
 
@@ -1679,9 +1739,9 @@ Replace with real image */
         <ul class="list-unstyled footer-links">
           <li><a href="#">Home</a></li>
           <li><a href="#blogs">Notification</a></li>
-          <li><a href="#winners">Winners</a></li>
+<!--           <li><a href="#winners">Winners</a></li>
           <li><a href="#">Terms & Conditions</a></li>
-          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Privacy Policy</a></li> -->
         </ul>
       </div>
 
