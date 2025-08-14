@@ -8,6 +8,28 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
+<!-- Devanagari font (for crisp Hindi) -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  /* Hide Google Translate UI completely */
+  .goog-te-banner-frame.skiptranslate, #goog-gt-tt, .goog-te-balloon-frame { display:none !important; }
+  body { top:0 !important; }
+  .goog-te-gadget { height:0; overflow:hidden; }
+
+  /* Simple language pill (put near navbar) */
+  .lang-switch {
+    display:flex; gap:8px; align-items:center;
+    background:#111; color:#fff; border-radius:12px; padding:6px 8px;
+  }
+  .lang-switch button {
+    border:0; cursor:pointer; padding:6px 10px; border-radius:8px; font-weight:600;
+  }
+  .lang-switch .to-hi { background:#fff; color:#111; }
+  .lang-switch .to-en { background:#2b2b2b; color:#fff; display:none; }
+  @media (max-width:600px){ .lang-switch{ margin-top:10px; } }
+</style>
 
 
   
@@ -1285,15 +1307,15 @@ Replace with real image */
 }
 
      /* Hide Google bar/bubbles + prevent layout shift */
-  .goog-te-banner-frame.skiptranslate, #goog-gt-tt, .goog-te-balloon-frame { display:none !important; }
-  body { top:0 !important; }
+/*   .goog-te-banner-frame.skiptranslate, #goog-gt-tt, .goog-te-balloon-frame { display:none !important; }
+  body { top:0 !important; } */
   /* Tiny floating toggle */
-  #lang-toggle{position:fixed;inset:auto 16px 16px auto;z-index:99999;background:#111;color:#fff;
+/*   #lang-toggle{position:fixed;inset:auto 16px 16px auto;z-index:99999;background:#111;color:#fff;
     border-radius:12px;padding:8px 10px;font:500 14px/1 system-ui,Segoe UI,Roboto;display:flex;gap:6px}
   #lang-toggle button{border:0;border-radius:9px;padding:6px 10px;cursor:pointer}
   #btn-hi{background:#fff;color:#111} #btn-en{background:#2b2b2b;color:#fff;display:none}
   @media(max-width:480px){#lang-toggle{left:16px;right:auto}}
-
+ */
 
 
 
@@ -1422,15 +1444,15 @@ Replace with real image */
 
 
 <!-- Hidden mount for Google Translate -->
-<div id="google_translate_element" style="display:none"></div>
+<!-- <div id="google_translate_element" style="display:none"></div> -->
 
 <!-- Toggle -->
-<div id="lang-toggle" aria-live="polite">
+<!-- <div id="lang-toggle" aria-live="polite">
   <span>Language</span>
   <button id="btn-hi">हिन्दी</button>
   <button id="btn-en">English</button>
 </div>
-
+ -->
   
 <!-- NAVIGATION BAR -->
 <div class="navbar-wrapper">
@@ -1962,11 +1984,83 @@ For participation in debate competition following procedure is to be followed
   </div>
 </div>
 
+<div class="lang-switch" id="langSwitch" aria-label="Language switch">
+  <span style="font-weight:600">Language</span>
+  <button class="to-hi" id="btnHi">हिन्दी</button>
+  <button class="to-en" id="btnEn">English</button>
+</div>
 
 
   
 </body>
  
+<!-- Hidden Google Translate mount -->
+<div id="google_translate_element" style="display:none;"></div>
+
+<script>
+  // Load Google Translate
+  function googleTranslateElementInit(){
+    new google.translate.TranslateElement(
+      { pageLanguage:'en', includedLanguages:'hi', autoDisplay:false },
+      'google_translate_element'
+    );
+  }
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script>
+(() => {
+  const btnHi = document.getElementById('btnHi');
+  const btnEn = document.getElementById('btnEn');
+  const KEY  = 'siteLangJYP';
+
+  function hideGoogleUI(){
+    const bar = document.querySelector('.goog-te-banner-frame');
+    if (bar) bar.style.display = 'none';
+    document.body.style.top = '0px';
+  }
+
+  function setLang(lang){
+    const sel = document.querySelector('select.goog-te-combo');
+    if(!sel) return;
+    sel.value = lang;                // 'hi' for Hindi, '' to reset to original
+    sel.dispatchEvent(new Event('change'));
+    hideGoogleUI();
+
+    const isHi = lang === 'hi';
+    btnHi.style.display = isHi ? 'none' : 'inline-block';
+    btnEn.style.display = isHi ? 'inline-block' : 'none';
+    localStorage.setItem(KEY, lang);
+
+    // Switch to Devanagari-friendly font when Hindi is active
+    document.documentElement.style.fontFamily = isHi
+      ? "'Noto Sans Devanagari','Inter',system-ui,-apple-system,Segoe UI,Roboto"
+      : "Inter,system-ui,-apple-system,Segoe UI,Roboto";
+  }
+
+  // Wait until Google injects its <select>, then restore saved language
+  const obs = new MutationObserver(() => {
+    if (document.querySelector('select.goog-te-combo')) {
+      const saved = localStorage.getItem(KEY);
+      if (saved) setLang(saved);
+      obs.disconnect();
+    }
+  });
+  obs.observe(document.body, { childList:true, subtree:true });
+
+  // Buttons
+  btnHi.addEventListener('click', () => setLang('hi'));
+  btnEn.addEventListener('click', () => setLang(''));   // reset to original (English)
+
+  // Safety: try once after load
+  window.addEventListener('load', () => setTimeout(() => {
+    if (document.querySelector('select.goog-te-combo')) {
+      const saved = localStorage.getItem(KEY);
+      if (saved) setLang(saved);
+    }
+  }, 400));
+})();
+</script>
 
   
 <script>
@@ -1993,64 +2087,64 @@ For participation in debate competition following procedure is to be followed
   const notifications = [
     {
       message: '📢 Registrations for Jagran Youth Parliament 2025 are now open!',
-      url: 'https://youthparliament.in/register',
-      date: '1st Aug 2025'
+      url: '#',
+      date: '15th Aug 2025'
     },
     {
-      message: '🗓️ Event dates: 14th–16th November at Constitution Club, New Delhi.',
-      url: 'https://youthparliament.in/event-details',
-      date: '30th Jul 2025'
+      message: ' ⌛ Last day of the registration is 31<sup>st</sup> August 2025.',
+      url: '#',
+      date: '31st Aug 2025'
     },
     {
-      message: '🎤 Speaker lineup to be revealed soon. Stay tuned!',
-      url: 'https://youthparliament.in/speakers',
-      date: '29th Jul 2025'
+      message: ' 🤵 Debate will start from 10<sup>th</sup> September 2025.',
+      url: '#',
+      date: '10th Sep 2025'
     },
     {
-      message: '📄 Download the official event schedule now.',
-      url: 'https://youthparliament.in/schedule',
-      date: '28th Jul 2025'
+      message: '🏆 All the winners will be shared at universities/college level!',
+      url: '#',
+      date: '2026'
     },
-    {
-      message: '📺 Watch the live stream of the opening ceremony here!',
-      url: 'https://youthparliament.in/live',
-      date: '27th Jul 2025'
-    },
-    {
-      message: '📸 Photo Gallery 2024 now available — relive the moments!',
-      url: 'https://youthparliament.in/photos',
-      date: '26th Jul 2025'
-    },
-    {
-      message: '📰 Media Coverage: JYP featured in national dailies.',
-      url: 'https://youthparliament.in/press',
-      date: '25th Jul 2025'
-    },
-    {
-      message: '👥 Meet your fellow delegates – join our community group.',
-      url: 'https://youthparliament.in/community',
-      date: '24th Jul 2025'
-    },
-    {
-      message: '🚌 Free bus transport from Delhi Metro stations on event days.',
-      url: 'https://youthparliament.in/transport',
-      date: '23rd Jul 2025'
-    },
-    {
-      message: '🎟️ Passes for final day will be emailed to registered users.',
-      url: 'https://youthparliament.in/passes',
-      date: '22nd Jul 2025'
-    },
-    {
-      message: '🚨 Emergency Update: Briefing sessions rescheduled.',
-      url: 'https://youthparliament.in/briefing',
-      date: '21st Jul 2025'
-    },
-    {
-      message: '💼 Volunteer opportunities now open for JYP 2025.',
-      url: 'https://youthparliament.in/volunteer',
-      date: '20th Jul 2025'
-    },
+    // {
+    //   message: '📺 Watch the live stream of the opening ceremony here!',
+    //   url: 'https://youthparliament.in/live',
+    //   date: '27th Jul 2025'
+    // },
+    // {
+    //   message: '📸 Photo Gallery 2024 now available — relive the moments!',
+    //   url: 'https://youthparliament.in/photos',
+    //   date: '26th Jul 2025'
+    // },
+    // {
+    //   message: '📰 Media Coverage: JYP featured in national dailies.',
+    //   url: 'https://youthparliament.in/press',
+    //   date: '25th Jul 2025'
+    // },
+    // {
+    //   message: '👥 Meet your fellow delegates – join our community group.',
+    //   url: 'https://youthparliament.in/community',
+    //   date: '24th Jul 2025'
+    // },
+    // {
+    //   message: '🚌 Free bus transport from Delhi Metro stations on event days.',
+    //   url: 'https://youthparliament.in/transport',
+    //   date: '23rd Jul 2025'
+    // },
+    // {
+    //   message: '🎟️ Passes for final day will be emailed to registered users.',
+    //   url: 'https://youthparliament.in/passes',
+    //   date: '22nd Jul 2025'
+    // },
+    // {
+    //   message: '🚨 Emergency Update: Briefing sessions rescheduled.',
+    //   url: 'https://youthparliament.in/briefing',
+    //   date: '21st Jul 2025'
+    // },
+    // {
+    //   message: '💼 Volunteer opportunities now open for JYP 2025.',
+    //   url: 'https://youthparliament.in/volunteer',
+    //   date: '20th Jul 2025'
+    // },
   ];
 
   let visibleCount = 6;
@@ -2083,10 +2177,10 @@ For participation in debate competition following procedure is to be followed
     renderNotifications();
   });
 
-  // Initial render
+ 
   renderNotifications();
 
-  // Simulate new notification push after 5 seconds
+
   setTimeout(() => {
     notifications.unshift({
       message: '🆕 Last Minute Addition: Special guest panel on India@2047 announced!',
@@ -2105,17 +2199,17 @@ For participation in debate competition following procedure is to be followed
   });
 
  
- // Show popup after 3sec
+ 
   document.addEventListener("DOMContentLoaded", () => {
     const popup = document.getElementById("jyp-popup");
 
-    // Show after 3 seconds (3000 ms)
+
     setTimeout(() => {
       if (!sessionStorage.getItem("jypPopupShown")) {
         popup.style.display = "flex";
         sessionStorage.setItem("jypPopupShown", "true");
       }
-    }, 3000); // Change delay here if needed
+    }, 3000);
   });
 
   function closePopup() {
@@ -2124,7 +2218,7 @@ For participation in debate competition following procedure is to be followed
 
 </script>
 
-<script>
+<!-- <script>
   function googleTranslateElementInit(){
     new google.translate.TranslateElement(
       {pageLanguage:'en',includedLanguages:'hi',autoDisplay:false},
@@ -2140,13 +2234,13 @@ For participation in debate competition following procedure is to be followed
   const btnEn = document.getElementById('btn-en');
   const KEY = 'siteLang';
 
-  // Set language via Google's injected <select>
+>
   function setLang(lang){
     const sel = document.querySelector('select.goog-te-combo');
     if(!sel) return;
     sel.value = lang; sel.dispatchEvent(new Event('change'));
 
-    // Hide any banner immediately (defensive)
+   
     const bar = document.querySelector('.goog-te-banner-frame');
     if(bar) bar.style.display = 'none';
     document.body.style.top = '0px';
@@ -2155,13 +2249,12 @@ For participation in debate competition following procedure is to be followed
     btnHi.style.display = hi ? 'none' : 'inline-block';
     btnEn.style.display = hi ? 'inline-block' : 'none';
     localStorage.setItem(KEY, lang);
-    // Optional: better Devanagari rendering
+ 
     document.documentElement.style.fontFamily = hi
       ? "'Noto Sans Devanagari', Montserrat, system-ui, -apple-system, Segoe UI, Roboto"
       : "Montserrat, system-ui, -apple-system, Segoe UI, Roboto";
   }
-
-  // Wait until Google injects the combo, then apply saved choice
+e
   const obs = new MutationObserver(() => {
     if(document.querySelector('select.goog-te-combo')){
       const saved = localStorage.getItem(KEY);
@@ -2171,11 +2264,9 @@ For participation in debate competition following procedure is to be followed
   });
   obs.observe(document.body, {childList:true,subtree:true});
 
-  // Click handlers
   btnHi.addEventListener('click', ()=> setLang('hi'));
-  btnEn.addEventListener('click', ()=> setLang(''));   // '' resets to original
+  btnEn.addEventListener('click', ()=> setLang(''));   
 
-  // Fallback: try once after load in case observer missed
   window.addEventListener('load', ()=> setTimeout(()=>{
     if(document.querySelector('select.goog-te-combo')){
       const saved = localStorage.getItem(KEY);
@@ -2183,5 +2274,5 @@ For participation in debate competition following procedure is to be followed
     }
   }, 400));
 })();
-</script>
+</script> -->
 </html>
