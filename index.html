@@ -11,6 +11,15 @@
 <!-- Devanagari-friendly font -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
+  
+<style>
+/* Completely hide the Google top frame and elements */
+.goog-te-banner-frame.skiptranslate { display: none !important; }
+body { top: 0px !important; }
+#goog-gt-tt { display: none !important; }
+.goog-te-balloon-frame { display: none !important; }
+.goog-text-highlight { background: none !important; box-shadow: none !important; }
+</style>
 
 <style>
   /* Hide Google’s default top bar and bubble to keep your design clean */
@@ -2035,6 +2044,31 @@ Replace with real image */
   function closePopup() {
     document.getElementById("jyp-popup").style.display = "none";
   }
+
+
+
+
+  function setLang(lang) {
+  const sel = document.querySelector('select.goog-te-combo');
+  if (!sel) return;
+  sel.value = lang;
+  sel.dispatchEvent(new Event('change'));
+
+  // Hide the banner immediately
+  const frame = document.querySelector('.goog-te-banner-frame');
+  if (frame) frame.style.display = 'none';
+  document.body.style.top = '0px';
+
+  const isHindi = lang === 'hi';
+  document.getElementById('btn-hi').style.display = isHindi ? 'none' : 'inline-block';
+  document.getElementById('btn-en').style.display = isHindi ? 'inline-block' : 'none';
+  localStorage.setItem('siteLang', lang);
+
+  // Font change
+  document.documentElement.style.fontFamily = isHindi
+    ? "'Noto Sans Devanagari', Montserrat, sans-serif"
+    : "Montserrat, sans-serif";
+}
 
 </script>
 
