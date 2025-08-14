@@ -1284,21 +1284,152 @@ Replace with real image */
   }
 }
 
+     /* Hide Google bar/bubbles + prevent layout shift */
+  .goog-te-banner-frame.skiptranslate, #goog-gt-tt, .goog-te-balloon-frame { display:none !important; }
+  body { top:0 !important; }
+  /* Tiny floating toggle */
+  #lang-toggle{position:fixed;inset:auto 16px 16px auto;z-index:99999;background:#111;color:#fff;
+    border-radius:12px;padding:8px 10px;font:500 14px/1 system-ui,Segoe UI,Roboto;display:flex;gap:6px}
+  #lang-toggle button{border:0;border-radius:9px;padding:6px 10px;cursor:pointer}
+  #btn-hi{background:#fff;color:#111} #btn-en{background:#2b2b2b;color:#fff;display:none}
+  @media(max-width:480px){#lang-toggle{left:16px;right:auto}}
+
+
+
+
+    /* Scoped styles only for JYP 2025 section */
+.jyp2025-section {
+  background: #f7f7fb;
+  padding: clamp(20px, 4vw, 48px) 16px;
+}
+
+.jyp2025-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.jyp2025-card {
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 10px 30px rgba(18, 38, 63, 0.08);
+  padding: clamp(18px, 3.2vw, 36px);
+}
+
+.jyp2025-head h2 {
+  font-size: clamp(26px, 3.2vw, 40px);
+  line-height: 1.15;
+  margin: 0 0 6px 0;
+  color: #2d2f31;
+  letter-spacing: -0.02em;
+}
+
+.jyp2025-sub {
+  margin: 0 0 18px 0;
+  font-size: clamp(14px, 1.6vw, 16px);
+  color: #6f7782;
+}
+
+.jyp2025-list {
+  list-style: none;
+  counter-reset: jyp2025-counter;
+  display: grid;
+  gap: 14px;
+  padding: 0;
+  margin: 0;
+}
+
+.jyp2025-list li {
+  counter-increment: jyp2025-counter;
+  background: #fff;
+  border: 1px solid #f1f2f6;
+  padding: 14px 14px 14px 58px;
+  border-radius: 16px;
+  color: #2d2f31;
+  line-height: 1.55;
+  position: relative;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.jyp2025-list li::before {
+  content: counter(jyp2025-counter);
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  color: #fff;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ff8a00, #ff5a00);
+  box-shadow: 0 6px 18px rgba(255, 125, 46, 0.25);
+}
+
+.jyp2025-list li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(18, 38, 63, 0.10);
+  border-color: #f0efe9;
+}
+
+.jyp2025-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.jyp2025-btn,
+.jyp2025-btn-outline {
+  font-weight: 600;
+  border-radius: 14px;
+  padding: 12px 18px;
+  text-decoration: none;
+  display: inline-block;
+  line-height: 1;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease, color .18s ease, border-color .18s ease;
+}
+
+.jyp2025-btn {
+  color: #fff;
+  background: linear-gradient(135deg, #ff8a00, #ff5a00);
+  box-shadow: 0 10px 20px rgba(255, 125, 46, 0.25);
+}
+.jyp2025-btn:hover { transform: translateY(-1px); }
+
+.jyp2025-btn-outline {
+  color: #2d2f31;
+  background: #fff;
+  border: 1.5px solid #dfe3e8;
+}
+.jyp2025-btn-outline:hover { border-color: #cfd6dd; }
+
+/* Responsive tweaks */
+@media (min-width: 768px) {
+  .jyp2025-list { gap: 16px; }
+  .jyp2025-list li { padding: 16px 18px 16px 62px; }
+  .jyp2025-list li::before { width: 36px; height: 36px; border-radius: 12px; }
+}
+
+@media (min-width: 1024px) {
+  .jyp2025-card { padding: 40px; }
+}
 
   </style>
 </head>
 <body>
 
-<!-- Translate popup -->
-<div id="lang-popup" aria-live="polite">
-  <span>Translate to Hindi</span>
+
+<!-- Hidden mount for Google Translate -->
+<div id="google_translate_element" style="display:none"></div>
+
+<!-- Toggle -->
+<div id="lang-toggle" aria-live="polite">
+  <span>Language</span>
   <button id="btn-hi">हिन्दी</button>
   <button id="btn-en">English</button>
 </div>
-
-<!-- Hidden Google Translate element (required) -->
-<div id="google_translate_element" style="display:none;"></div>
-
 
   
 <!-- NAVIGATION BAR -->
@@ -1320,6 +1451,7 @@ Replace with real image */
     <nav class="navbar-menu" id="navbarMenu">
       <ul class="navbar-nav">
         <li><a class="nav-link" href="#about">About</a></li>
+        <li><a class="nav-link" href="#how">How to Apply</a></li>
         <li><a class="nav-link" href="#program">Program</a></li>
         <li><a class="nav-link" href="#eligibility">Eligibility</a></li>
         <li><a class="nav-link" href="#blogs">Notification</a></li>
@@ -1372,6 +1504,8 @@ Replace with real image */
         <h1>Jagran Youth Parliament 2025</h1>
         <h2>The Moment You Step up,<br>India Steps Forward</h2>
         <p>An initiative by Dainik Jagran to foster informed citizenship and develop the next generation of public leaders through structured, high-impact parliamentary simulation.</p>
+        <p>Jagran Youth Parliament recognizes that India's most complex challenges require fresh perspectives, not recycled solutions. JYP is a platform designed to immerse India's brightest minds in exploring ideas through democratic process. Through structured debates and interactive simulations, JYP builds leadership, develops communication skills, and inspires civic engagement.</p>
+
         <div class="hero-buttons mt-4">
           <a href="https://brandmingoacademy24.github.io/form/" class="btn btn-apply">Apply Now</a>
           <a href="#program" class="btn btn-outline-dark">Explore Program</a>
@@ -1384,15 +1518,51 @@ Replace with real image */
   </div>
 </section>
 
+<!-- JYP: Eligibility & Rules -->
+<section id="how" class="jyp2025-section">
+  <div class="jyp2025-container">
+    <div class="jyp2025-card">
+      <div class="jyp2025-head">
+        <h2>Eligibility & Rules</h2>
+        <p class="jyp2025-sub">Jagran Youth Parliament 2025</p>
+      </div>
+
+      <ol class="jyp2025-list">
+        <li>Only Under Graduates and Post Graduates students of recognized University/College can apply.</li>
+        <li>Applicants need to apply in team of two.</li>
+        <li>Applicants (Partners) have to fill the information in the same form as participant 1 and participant 2.</li>
+        <li>All fields of form are mandatory to fill.</li>
+        <li>Only valid college I-card must be uploaded as proof of identity.</li>
+        <li>The team has to select from the given motion for the debate.</li>
+        <li>Member of each team has to debate for and against the motion.</li>
+        <li>Applicants have to choose one preferred language from Hindi or English.</li>
+        <li>Registration confirmation will be shared on the email IDs provided by the applicants.</li>
+        <li>A pair can register one time only.</li>
+        <li>Debate competition will be held at college/university level.</li>
+        <li>The winners will be decided by the jury as a team and not as individuals.</li>
+        <li>Selected team will be informed through email.</li>
+      </ol>
+
+      <div class="jyp2025-cta">
+        <a href="#apply" class="jyp2025-btn">Apply Now</a>
+        <a href="#program" class="jyp2025-btn-outline">Explore Program</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <!-- ABOUT SECTION -->
-<section id="about" class="about-section">
+<!-- <section id="about" class="about-section">
   <div class="container">
     <div class="row">
     
       <div class="col-md-6 d-flex align-items-center">
         <div class="about-content">
-          <h3>About</h3>
-          <p>Jagran Youth Parliament recognizes that India's most complex challenges require fresh perspectives, not recycled solutions. JYP is a platform designed to immerse India's brightest minds in exploring ideas through democratic process. Through structured debates and interactive simulations, JYP builds leadership, develops communication skills, and inspires civic engagement.</p>
+          <h3>How to apply (Procedure)</h3>
+          <p>JSelection process of JYP is through debate competition only.<br>
+For participation in debate competition following procedure is to be followed 
+</p>
         </div>
       </div>
       
@@ -1400,8 +1570,8 @@ Replace with real image */
         <div class="about-images">
           <div class="about-img-left"></div>
           <div class="about-img-right">
-<!--             <div class="about-img-top"></div> -->
-<!--             <div class="about-img-bottom"></div> -->
+            <div class="about-img-top"></div>
+            <div class="about-img-bottom"></div>
           </div>
         </div>
       </div>
@@ -1409,7 +1579,7 @@ Replace with real image */
     </div>
   </div>
 </section>
-
+ -->
 <!-- MISSION SECTION -->
 <section id="mission" class="mission-section py-5">
   <div class="container">
@@ -1561,23 +1731,23 @@ Replace with real image */
 
 
 <!-- ELIGIBILITY SECTION -->
-<section id="eligibility" class="py-5">
+<!-- <section id="eligibility" class="py-5">
   <div class="container">
     <h3 class="text-center fw-bold mb-5" style="color: #e46428;">Eligibility</h3>
-    <div class="row text-center g-4 justify-content-center">
+    <div class="row text-center g-4 justify-content-center"> -->
 
       <!-- Card 1: Who Can Apply -->
-      <div class="col-md-6" style="">
+<!--       <div class="col-md-6" style="">
         <div class="eligibility-gradient-card eligibility-orange">
-          <div class="eligibility-text">
+          <div class="eligibility-text"> -->
 <!--             <h5>Who Can Apply</h5> -->
-            <h4>Open to Undergraduate and Postgraduate students across India.</h4>
+<!--             <h4>Open to Undergraduate and Postgraduate students across India.</h4>
           </div>
           <div class="eligibility-img">
             <img src="https://i.ibb.co/5ghsGkHD/Who-Can-Apply.png" alt="Megaphone Icon" class="eligibility-icon-img">
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- Card 2: Selection Format -->
 <!--       <div class="col-md-4">
@@ -1605,10 +1775,10 @@ Replace with real image */
         </div>
       </div> -->
 
-    </div>
+<!--     </div>
   </div>
 </section>
-
+ -->
 
 
 
@@ -1951,10 +2121,66 @@ Replace with real image */
     document.getElementById("jyp-popup").style.display = "none";
   }
 
-
-
-
 </script>
 
+<script>
+  function googleTranslateElementInit(){
+    new google.translate.TranslateElement(
+      {pageLanguage:'en',includedLanguages:'hi',autoDisplay:false},
+      'google_translate_element'
+    );
+  }
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
+<script>
+(()=> {
+  const btnHi = document.getElementById('btn-hi');
+  const btnEn = document.getElementById('btn-en');
+  const KEY = 'siteLang';
+
+  // Set language via Google's injected <select>
+  function setLang(lang){
+    const sel = document.querySelector('select.goog-te-combo');
+    if(!sel) return;
+    sel.value = lang; sel.dispatchEvent(new Event('change'));
+
+    // Hide any banner immediately (defensive)
+    const bar = document.querySelector('.goog-te-banner-frame');
+    if(bar) bar.style.display = 'none';
+    document.body.style.top = '0px';
+
+    const hi = lang === 'hi';
+    btnHi.style.display = hi ? 'none' : 'inline-block';
+    btnEn.style.display = hi ? 'inline-block' : 'none';
+    localStorage.setItem(KEY, lang);
+    // Optional: better Devanagari rendering
+    document.documentElement.style.fontFamily = hi
+      ? "'Noto Sans Devanagari', Montserrat, system-ui, -apple-system, Segoe UI, Roboto"
+      : "Montserrat, system-ui, -apple-system, Segoe UI, Roboto";
+  }
+
+  // Wait until Google injects the combo, then apply saved choice
+  const obs = new MutationObserver(() => {
+    if(document.querySelector('select.goog-te-combo')){
+      const saved = localStorage.getItem(KEY);
+      if(saved) setLang(saved);
+      obs.disconnect();
+    }
+  });
+  obs.observe(document.body, {childList:true,subtree:true});
+
+  // Click handlers
+  btnHi.addEventListener('click', ()=> setLang('hi'));
+  btnEn.addEventListener('click', ()=> setLang(''));   // '' resets to original
+
+  // Fallback: try once after load in case observer missed
+  window.addEventListener('load', ()=> setTimeout(()=>{
+    if(document.querySelector('select.goog-te-combo')){
+      const saved = localStorage.getItem(KEY);
+      if(saved) setLang(saved);
+    }
+  }, 400));
+})();
+</script>
 </html>
