@@ -7,6 +7,36 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Devanagari-friendly font -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  /* Hide Google’s default top bar and bubble to keep your design clean */
+  .goog-te-banner-frame { display: none !important; }
+  #goog-gt-tt { display: none !important; }
+  body { top: 0 !important; }
+  .goog-te-gadget { height: 0; overflow: hidden; }
+  .goog-logo-link, .goog-te-gadget span { display: none !important; }
+
+  /* Popup styles */
+  #lang-popup {
+    position: fixed; right: 16px; bottom: 16px; z-index: 99999;
+    background:#111; color:#fff; padding:12px 14px; border-radius:14px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2); display:flex; gap:8px; align-items:center;
+    font:500 14px/1.2 system-ui, -apple-system, Segoe UI, Roboto;
+  }
+  #lang-popup button {
+    border:0; padding:8px 12px; border-radius:10px; cursor:pointer;
+  }
+  #lang-popup #btn-hi { background:#fff; color:#111; }
+  #lang-popup #btn-en { background:#2b2b2b; color:#fff; display:none; }
+  @media (max-width:480px){ #lang-popup { left:16px; right:auto; } }
+</style>
+
+
+  
   <style>
    :root {
   --primary: #3b3c3d;
@@ -1285,6 +1315,18 @@ Replace with real image */
 </head>
 <body>
 
+<!-- Translate popup -->
+<div id="lang-popup" aria-live="polite">
+  <span>Translate to Hindi</span>
+  <button id="btn-hi">हिन्दी</button>
+  <button id="btn-en">English</button>
+</div>
+
+<!-- Hidden Google Translate element (required) -->
+<div id="google_translate_element" style="display:none;"></div>
+
+
+  
 <!-- NAVIGATION BAR -->
 <div class="navbar-wrapper">
   <div class="container nav-container">
@@ -1779,6 +1821,67 @@ Replace with real image */
 
   
 </body>
+  <script>
+  // 1) Load and init Google Translate
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement(
+      { pageLanguage: 'en', includedLanguages: 'hi', autoDisplay: false },
+      'google_translate_element'
+    );
+  }
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script>
+(function () {
+  const btnHi = document.getElementById('btn-hi');
+  const btnEn = document.getElementById('btn-en');
+
+  // Change language via Google’s injected <select.goog-te-combo>
+  function setLang(lang) {
+    const sel = document.querySelector('select.goog-te-combo');
+    if (!sel) return; // not ready yet
+    sel.value = lang;               // 'hi' for Hindi, '' to reset to original
+    sel.dispatchEvent(new Event('change'));
+
+    const isHindi = lang === 'hi';
+    btnHi.style.display = isHindi ? 'none' : 'inline-block';
+    btnEn.style.display = isHindi ? 'inline-block' : 'none';
+    localStorage.setItem('siteLang', lang);
+
+    // Switch font for Devanagari
+    document.documentElement.style.fontFamily = isHindi
+      ? "'Noto Sans Devanagari', Montserrat, system-ui, -apple-system, Segoe UI, Roboto"
+      : "Montserrat, system-ui, -apple-system, Segoe UI, Roboto";
+  }
+
+  // Observe until Google injects the language <select>, then restore user’s choice
+  const obs = new MutationObserver(() => {
+    const sel = document.querySelector('select.goog-te-combo');
+    if (sel) {
+      const saved = localStorage.getItem('siteLang');
+      if (saved) setLang(saved);
+      obs.disconnect();
+    }
+  });
+  obs.observe(document.body, { childList: true, subtree: true });
+
+  // Buttons
+  btnHi.addEventListener('click', () => setLang('hi'));
+  btnEn.addEventListener('click', () => setLang(''));
+
+  // If the widget already loaded before observer began (rare), try once
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      if (document.querySelector('select.goog-te-combo')) {
+        const saved = localStorage.getItem('siteLang');
+        if (saved) setLang(saved);
+      }
+    }, 500);
+  });
+})();
+</script>
+
   
 <script>
   const hamburger = document.getElementById("hamburger");
