@@ -2133,25 +2133,110 @@ For participation in debate competition following procedure is to be followed
 </script>
 
 <script>
-/* ============ SIMPLE I18N TOGGLE (EN ↔ HI) ============ */
-function setLangClass(isHindi) {
-  document.documentElement.setAttribute('lang', isHindi ? 'hi' : 'en');
-  document.body.classList.toggle('lang-hi', isHindi);
+/* ========== NAV: hamburger ========== */
+const hamburger = document.getElementById("hamburger");
+const navbarMenu = document.getElementById("navbarMenu");
+hamburger.addEventListener("click", () => navbarMenu.classList.toggle("active"));
+
+/* ========== Top ticker (keep, optional photo gallery add) ========== */
+setTimeout(() => {
+  const track = document.getElementById('jypNotificationTrack');
+  if (!track) return;
+  const a = document.createElement('a');
+  a.href = 'https://youthparliament.in/photos';
+  a.className = 'jyp-notification-item';
+  a.target = '_blank';
+  a.textContent = '📸 Photo Gallery 2024 now available — relive the moments!';
+  track.appendChild(a.cloneNode(true));
+  track.appendChild(a);
+}, 6000);
+
+/* ========== Notification cards list (no surprise injections) ========== */
+let notifications = [
+  { message: '📢 Registrations for Jagran Youth Parliament 2025 are now open!', url: '#', date: '15th Aug 2025' },
+  { message: ' ⌛ Last day of the registration is 31<sup>st</sup> August 2025.', url: '#', date: '31st Aug 2025' },
+  { message: ' 🤵 Debate will start from 10<sup>th</sup> September 2025.', url: '#', date: '10th Sep 2025' },
+  { message: '🏆 All the winners will be shared at universities/college level!', url: '#', date: '2026' },
+];
+/* Hard-block any unwanted items if they ever get pushed from elsewhere */
+const BLOCK_TERMS = ['India@2047', 'Last Minute Addition'];
+notifications = notifications.filter(n =>
+  !BLOCK_TERMS.some(k => (n.message || '').includes(k))
+);
+
+let visibleCount = 6;
+function renderNotifications() {
+  const listContainer = document.getElementById('jypNotificationList');
+  if (!listContainer) return;
+  listContainer.innerHTML = '';
+  for (let i = 0; i < visibleCount && i < notifications.length; i++) {
+    const it = notifications[i];
+    const card = document.createElement('div');
+    card.className = 'jyp-notification-card';
+    card.innerHTML = `<a href="${it.url}" target="_blank">${it.message}</a><span>${it.date}</span>`;
+    listContainer.appendChild(card);
+  }
+  const loadBtn = document.getElementById('loadMoreBtn');
+  if (loadBtn) loadBtn.style.display = visibleCount >= notifications.length ? 'none' : 'inline-block';
+}
+document.getElementById('loadMoreBtn')?.addEventListener('click', () => {
+  visibleCount += 3;
+  renderNotifications();
+});
+renderNotifications();
+
+/* ========== FAQ toggles ========== */
+document.querySelectorAll('.jyp-faq-question').forEach(btn => {
+  btn.addEventListener('click', () => btn.parentElement.classList.toggle('active'));
+});
+
+/* ========== Popup show once per session ========== */
+document.addEventListener("DOMContentLoaded", () => {
+  const popup = document.getElementById("jyp-popup");
+  setTimeout(() => {
+    if (!sessionStorage.getItem("jypPopupShown")) {
+      popup.style.display = "flex";
+      sessionStorage.setItem("jypPopupShown", "true");
+    }
+  }, 3000);
+});
+function closePopup(){ document.getElementById("jyp-popup").style.display = "none"; }
+
+/* =======================================================================
+   I18N TOGGLE (EN ↔ HI) with safe logo swap + cache-busting
+   ======================================================================= */
+const HINDI_LOGO = 'https://i.ibb.co/4bkhDQy/Dainik-Jagran.png';
+function getLogoImg(){
+  return document.querySelector('.navbar-brand img')
+      || document.querySelector('header .navbar-brand img')
+      || document.querySelector('img[alt*="JYP"]')
+      || document.querySelector('img[alt*="Jagran"]');
+}
+function swapLogo(src, alt){
+  const img = getLogoImg();
+  if (!img) return;
+  try {
+    const u = new URL(src, location.href); u.searchParams.set('v','hi'); img.src = u.toString();
+  } catch { img.src = src + (src.includes('?') ? '&' : '?') + 'v=hi'; }
+  if (alt) img.alt = alt;
 }
 
 /* Sticky buttons */
 const btnHI = document.getElementById('gt-hi');
 const btnEN = document.getElementById('gt-en');
 
-/* ====== HINDI COPY (uses your provided text) ====== */
+/* ====== UPDATED HINDI COPY (your new requirements) ====== */
 const HI = {
   popup: {
     title: 'आवेदन शुरू!',
     text: 'जागरण युवा संसद में हिस्सा लें और भविष्य निर्माण हेतु अपने विचार रखें.',
     cta: 'अभी आवेदन करें'
   },
-  menu: ['परिचय','आवेदन कैसे करें','कार्यक्रम','पात्रता','अधिसूचना','सामान्य प्रश्न'],
+  /* Menu order matches the six links in your navbar */
+  menu: ['परिचय','आवेदन की प्रक्रिया','कार्यक्रम','पात्रता','अधिसूचना','सामान्यत प्रश्न'],
+
   applyNow: 'अभी आवेदन करें',
+  exploreProgram: 'कार्यक्रम के बारे में जानें',
 
   notifSlider: [
     'जागरण युवा संसद 2025 हेतु आवेदन प्रक्रिया शुरू',
@@ -2160,18 +2245,19 @@ const HI = {
   ],
 
   hero: {
-    h1: 'जागरण यूथ पार्लियामेंट 2025',
-    h2: 'जब आप कदम बढ़ाते हैं, भारत आगे बढ़ता है।',
-    p1: 'दैनिक जागरण की पहल — जागरूक नागरिकता को बढ़ावा देने और अगली पीढ़ी के सार्वजनिक नेताओं को विकसित करने के लिए एक संरचित, प्रभावशाली संसदीय सिमुलेशन।',
-    p2: 'जागरण यूथ पार्लियामेंट मानता है कि भारत की सबसे जटिल चुनौतियों का समाधान पुराने विचारों से नहीं, बल्कि नए दृष्टिकोणों से संभव है। यही कारण है कि जे.वाई.पी. एक ऐसा मंच है जो भारत के सबसे उज्ज्वल मस्तिष्कों को लोकतांत्रिक प्रक्रिया के माध्यम से विचारों की खोज और विमर्श में शामिल करता है।<br><br>संरचित बहसों और इंटरैक्टिव सिमुलेशन के माध्यम से, जे.वाई.पी. नेतृत्व का निर्माण करता है, संचार कौशल को विकसित करता है और नागरिक भागीदारी को प्रेरित करता है।'
+    h1: 'जागरण युवा संसद 2025',
+    h2: 'देश के कल में, आज बनो भागीदार',
+    p1: 'जागरण युवा संसद दैनिक जागरण की एक पहल है जिसके माध्यम से अगली पीढ़ी के प्रतिनिधियों/नीति निर्णायकों के बौद्धिक और मानसिक संरचना को सुगठित, प्रभावी और संसदीय बनाने के लिए संकल्पित है।',
+    p2: 'जागरण युवा संसद मानता है कि भारत की सबसे जटिल चुनौतियों का समाधान पुराने विचारों से नहीं, बल्कि नए दृष्टिकोणों से संभव है। यही कारण है कि जागरण युवा संसद एक ऐसा मंच है जो भारत के सबसे उज्ज्वल मस्तिष्कों को लोकतांत्रिक प्रक्रिया के माध्यम से विचारों की खोज और विमर्श में शामिल करता है।<br><br>सुगठित वाद-विवाद और विचार विमर्श के माध्यम से, जागरण युवा संसद जहाँ एक ओर देश के युवाओं की नेतृत्व क्षमता और अभिव्यक्ति कौशल को विकसित करता है, वहीं, नागरिक भागीदारी को प्रेरित भी करता है।'
   },
 
   howJyp: {
-    heading: 'JYP की प्रक्रिया',
+    heading: 'जागरण युवा संसद की प्रक्रिया',
+    subline: 'देश के कल के प्रतिनिधियों/नीति निर्धारकों के निर्माण हेतु उन्हें संसदीय वाद-विवाद का अनुभव प्रदान करना।',
     cards: [
       {
-        title: 'वाद-विवाद और सहयोग',
-        text: 'स्नातक (UG) और स्नातकोत्तर (PG) स्तर पर 6 मिनट की जोड़ीदार बहस में भाग लें।<br>विषय-आधारित तर्क प्रस्तुत करें, जिसका मूल्यांकन स्पष्ट अभिव्यक्ति और तार्किकता के आधार पर किया जाएगा।'
+        title: 'सहभागिता और वाद-विवाद',
+        text: 'स्नातक (UG) और स्नातकोत्तर (PG) स्तर पर 6 मिनट के वाद-विवाद में भाग लें।<br>विषय-आधारित तर्क प्रस्तुत करें, जिसका मूल्यांकन स्पष्ट अभिव्यक्ति और तार्किकता के आधार पर किया जाएगा।'
       },
       {
         title: 'कौशल विकास',
@@ -2185,7 +2271,7 @@ const HI = {
   },
 
   howToApply: {
-    title: 'कैसे आवेदन करें (प्रक्रिया)',
+    title: 'आवेदन की प्रक्रिया',
     sub: 'जागरण युवा संसद (JYP) की चयन प्रक्रिया केवल वाद-विवाद प्रतियोगिता के माध्यम से होगी।<br>वाद-विवाद प्रतियोगिता में भाग लेने के लिए निम्नलिखित प्रक्रिया का पालन करना आवश्यक है—',
     items: [
       'केवल मान्यता प्राप्त विश्वविद्यालय/कालेज के स्नातक (UG) और स्नातकोत्तर (PG) छात्र ही आवेदन कर सकते हैं।',
@@ -2194,7 +2280,7 @@ const HI = {
       'फार्म के सभी कालम भरना अनिवार्य है।',
       'पहचान प्रमाण के रूप में केवल मान्य कालेज पहचान पत्र (I-Card) ही अपलोड किया जा सकता है।',
       'टीम को वाद-विवाद के लिए दिए गए विषयों (मोशन) में से एक का चयन करना होगा।',
-      'टीम का प्रत्येक सदस्य, चुने गए विषय के पक्ष और विपक्ष—दोनों पर बहस करेगा।',
+      'टीम का एक सदस्य, चुने गए विषय के पक्ष में और दूसरा सदस्य विपक्ष में अपने विचार रखेंगे।',
       'आवेदकों को हिंदी या अंग्रेजी में से अपनी एक पसंदीदा भाषा का चयन करना होगा।',
       'पंजीकरण की पुष्टि, आवेदकों द्वारा दिए गए ईमेल आईडी पर भेजी जाएगी।',
       'एक जोड़ी केवल एक बार ही पंजीकरण कर सकती है।',
@@ -2206,15 +2292,15 @@ const HI = {
   },
 
   mission: {
-    title: 'हमारा मिशन',
-    text: 'भारत की लोकतांत्रिक प्रक्रिया में युवाओं की सक्रिय भागीदारी सुनिश्चित करने के लिए उन्हें ज्ञान, आत्मविश्वास और नेतृत्व कौशल से सशक्त बनाना — ताकि वे प्रगतिशील बदलाव की सशक्त आवाज़ बन सकें।'
+    title: 'हमारा उद्देश्य',
+    text: 'भारत की लोकतांत्रिक प्रक्रिया में युवाओं की सक्रिय भागीदारी सुनिश्चित करने के लिए उन्हें ज्ञान, आत्मविश्वास और नेतृत्व कौशल से सशक्त बनाना।'
   },
 
   flow: {
     title: 'कार्यक्रम का क्रम',
     phases: [
-      { h: 'चरण 1', items: ['वादविवाद के लिए साथी का चयन।','आधिकारिक वेबसाइट पर पंजीकरण।','चर्चा के विषय का चयन।'] },
-      { h: 'चरण 2', items: ['कालेज एवं अंतर-कालेज बहस में भाग लेना (UG छात्रों के लिए)।','विभागीय एवं अंतर-विभागीय बहस में भाग लेना (PG छात्रों के लिए)।','निर्णायक मंडल (जूरी) द्वारा विजेताओं का चयन।','केवल विजेता JYP का हिस्सा बनने के पात्र होंगे।'] },
+      { h: 'चरण 1', items: ['वाद-विवाद के लिए साथी का चयन।','आधिकारिक वेबसाइट पर पंजीकरण।','चर्चा के विषय का चयन।'] },
+      { h: 'चरण 2', items: ['कालेज एवं अंतर-कालेज वाद-विवाद में भाग लेना (UG छात्रों के लिए)।','विभागीय एवं अंतर-विभागीय वाद-विवाद में भाग लेना (PG छात्रों के लिए)।','निर्णायक मंडल (जूरी) द्वारा विजेताओं का चयन।','केवल विजेता JYP का हिस्सा बनने के पात्र होंगे।'] },
       { h: 'चरण 3', items: ['संसदीय प्रक्रियाओं पर 15 दिनों का प्रशिक्षण।','विभिन्न विधेयकों और कानूनों पर 15 दिनों का प्रशिक्षण।'] },
       { h: 'चरण 4', items: ['चयनित JYP सदस्य दिल्ली में 2 दिवसीय सत्र में भाग लेंगे।','नीति-निर्माताओं की उपस्थिति में बहस और चर्चा करेंगे।'] }
     ]
@@ -2232,7 +2318,7 @@ const HI = {
   },
 
   faq: {
-    title: 'सामान्यत: प्रश्न',
+    title: 'सामान्यत प्रश्न',
     qs: [
       'जागरण युवा संसद में कौन आवेदन कर सकता है?','क्या आवेदन शुल्क है?','कार्यक्रम का प्रारूप क्या है?','क्या यात्रा भत्ता का भुगतान किया जाएगा?','नामांकन की सूचना कैसे प्राप्त होगी?'
     ],
@@ -2251,66 +2337,55 @@ const HI = {
     brandTitle: 'जागरण युवा संसद',
     brandLine: 'देश के कल में आज बनो भागीदार',
     linksTitle: 'महत्त्वपूर्ण लिंक',
-    links: ['मुखपृष्ठ','नोटिफिकेशन'],
+    links: ['मुखपृष्ठ','अधिसूचना'],
     support: 'सहायता'
   },
 
-  logoHindiSrc: 'https://i.ibb.co/4bkhDQy/Dainik-Jagran.png'
+  logoHindiSrc: HINDI_LOGO
 };
 
-/* ====== UTIL ====== */
-function qs(sel, root = document) { return root.querySelector(sel); }
-function qsa(sel, root = document) { return Array.from(root.querySelectorAll(sel)); }
+/* ====== Util & English cache ====== */
+function qs(sel, root=document){ return root.querySelector(sel); }
+function qsa(sel, root=document){ return Array.from(root.querySelectorAll(sel)); }
 
-/* ====== English cache (so we can restore) ====== */
 const EN_CACHE = {};
-
-/* Cache initial English content once */
-function cacheEnglish() {
+function cacheEnglish(){
   if (EN_CACHE._done) return;
 
-  // Logo
-  const logoImg = document.querySelector('.navbar-brand img');
-  if (logoImg) EN_CACHE.logoSrc = logoImg.src;
+  const logoImg = getLogoImg(); if (logoImg) EN_CACHE.logoSrc = logoImg.currentSrc || logoImg.src;
 
-  // Popup
   EN_CACHE.popup = {
     title: qs('#jyp-popup .jyp-popup-title')?.innerHTML || '',
     text: qs('#jyp-popup .jyp-popup-text')?.innerHTML || '',
-    cta: qs('#jyp-popup .jyp-popup-btn')?.textContent || ''
+    cta:  qs('#jyp-popup .jyp-popup-btn')?.textContent || ''
   };
-
-  // Menu (first 6 links)
   EN_CACHE.menu = qsa('.navbar-menu .navbar-nav li a').slice(0,6).map(a => a.textContent.trim());
 
-  // Apply buttons
   EN_CACHE.applyNow = qs('.btn-apply')?.textContent.trim() || 'Apply Now';
   EN_CACHE.applyNowCTA = qs('.btn-apply-now')?.textContent.trim() || 'Apply Now';
+  EN_CACHE.heroExplore = qs('.hero-text a[href="#program"]')?.textContent || 'Explore Program';
 
-  // Notification slider (first 3 items)
   EN_CACHE.notifSlider = qsa('.jyp-notification-track .jyp-notification-item').slice(0,3).map(a => a.innerHTML);
 
-  // Hero
   EN_CACHE.hero = {
     h1: qs('.hero-text h1')?.textContent || '',
     h2: qs('.hero-text h2')?.innerHTML || '',
-    p1: (qsa('.hero-text p')[0]?.innerHTML || ''),
-    p2: (qsa('.hero-text p')[1]?.innerHTML || '')
+    p1: qsa('.hero-text p')[0]?.innerHTML || '',
+    p2: qsa('.hero-text p')[1]?.innerHTML || ''
   };
 
-  // How JYP Works
   EN_CACHE.howJyp = {
     heading: qs('#program .jyp-heading')?.textContent || '',
+    subline: qs('#program .row.mb-5 p.text-muted')?.innerHTML || '',
     cards: qsa('#program .jyp-box').map(box => ({
       title: qs('h5', box)?.textContent || '',
-      text: qs('p', box)?.innerHTML || ''
+      text:  qs('p',  box)?.innerHTML || ''
     }))
   };
 
-  // How to Apply
   EN_CACHE.howToApply = {
     title: qs('#how .jyp2025-head h2')?.textContent || '',
-    sub: qs('#how .jyp2025-sub')?.innerHTML || '',
+    sub:   qs('#how .jyp2025-sub')?.innerHTML || '',
     items: qsa('#how .jyp2025-list li').map(li => li.innerHTML),
     ctas: [
       qs('#how .jyp2025-btn')?.textContent.trim() || '',
@@ -2318,144 +2393,128 @@ function cacheEnglish() {
     ]
   };
 
-  // Mission
   EN_CACHE.mission = {
     title: qs('#mission .mission-heading')?.textContent || '',
-    text: qs('#mission .mission-text')?.innerHTML || ''
+    text:  qs('#mission .mission-text')?.innerHTML || ''
   };
 
-  // Program Flow
   EN_CACHE.flow = {
     title: qs('#program-flow-section h2')?.textContent || '',
-    phases: qsa('#program-flow-section .timeline-block').map(block => ({
-      h: qs('h5', block)?.textContent || '',
-      items: qsa('ul li', block).map(li => li.innerHTML)
+    phases: qsa('#program-flow-section .timeline-block').map(b => ({
+      h: qs('h5', b)?.textContent || '',
+      items: qsa('ul li', b).map(li => li.innerHTML)
     }))
   };
 
-  // Notification List (title & button text)
   EN_CACHE.notifList = {
     title: qs('#blogs .jyp-section-heading')?.textContent || '',
     loadMore: qs('#loadMoreBtn')?.textContent || ''
   };
 
-  // FAQ
   EN_CACHE.faq = {
     title: qs('#apply .jyp-faq-heading')?.textContent || '',
-    qs: qsa('#apply .jyp-faq-question').map(b => b.textContent.trim()),
-    ans: qsa('#apply .jyp-faq-answer p').map(p => p.innerHTML)
+    qs:    qsa('#apply .jyp-faq-question').map(b => b.textContent.trim()),
+    ans:   qsa('#apply .jyp-faq-answer p').map(p => p.innerHTML)
   };
 
-  // CTA
   EN_CACHE.cta = {
     title: qs('.cta-section h2')?.textContent || '',
-    text: qs('.cta-section p')?.innerHTML || '',
-    btn: qs('.btn-apply-now')?.textContent || ''
+    text:  qs('.cta-section p')?.innerHTML || '',
+    btn:   qs('.btn-apply-now')?.textContent || ''
   };
 
-  // Footer (use column positions for reliability)
   const fCols = qsa('footer .row > div');
   EN_CACHE.footer = {
     brandTitle: qs('h5, h6', fCols[0])?.textContent || '',
-    brandLine: qs('p', fCols[0])?.textContent || '',
+    brandLine:  qs('p', fCols[0])?.textContent || '',
     linksTitle: qs('h6', fCols[1])?.textContent || '',
-    links: qsa('.footer-links li a').map(a => a.textContent.trim()),
-    support: qs('h6', fCols[2])?.textContent || ''
+    links:      qsa('.footer-links li a').map(a => a.textContent.trim()),
+    support:    qs('h6', fCols[2])?.textContent || ''
   };
 
   EN_CACHE._done = true;
 }
 
-/* ====== APPLY HINDI ====== */
-function applyHindi() {
+/* ====== Apply Hindi ====== */
+function applyHindi(){
   cacheEnglish();
-  setLangClass(true);
+  document.documentElement.setAttribute('lang','hi');
+  document.body.classList.add('lang-hi');
 
-  // Logo swap
-  const logoImg = document.querySelector('.navbar-brand img');
-  if (logoImg) {
-    logoImg.src = HI.logoHindiSrc;
-    logoImg.alt = "Dainik Jagran (Hindi)";
-  }
+  /* Logo */
+  swapLogo(HI.logoHindiSrc, 'Dainik Jagran (Hindi)');
 
-  // Popup
-  const pT = qs('#jyp-popup .jyp-popup-title');
-  const pTx = qs('#jyp-popup .jyp-popup-text');
-  const pBtn = qs('#jyp-popup .jyp-popup-btn');
+  /* Popup */
+  const pT=qs('#jyp-popup .jyp-popup-title'), pTx=qs('#jyp-popup .jyp-popup-text'), pBtn=qs('#jyp-popup .jyp-popup-btn');
   if (pT) pT.textContent = HI.popup.title;
   if (pTx) pTx.textContent = HI.popup.text;
   if (pBtn) pBtn.textContent = HI.popup.cta;
 
-  // Menu
-  qsa('.navbar-menu .navbar-nav li a').slice(0,6).forEach((a, i) => { a.textContent = HI.menu[i] || a.textContent; });
+  /* Menu */
+  qsa('.navbar-menu .navbar-nav li a').slice(0,6).forEach((a,i)=> a.textContent = HI.menu[i] || a.textContent);
 
-  // Apply Now buttons
+  /* Hero CTAs */
   qsa('.btn-apply, .desktop-apply.btn-apply, .mobile-apply .btn-apply').forEach(b => b.textContent = HI.applyNow);
-  const heroCTA = qs('.btn-apply-now'); if (heroCTA) heroCTA.textContent = HI.applyNow;
+  const heroExplore = qs('.hero-text a[href="#program"]'); if (heroExplore) heroExplore.textContent = HI.exploreProgram;
+  const heroApplyNowCTA = qs('.btn-apply-now'); if (heroApplyNowCTA) heroApplyNowCTA.textContent = HI.applyNow;
 
-  // Notification slider (first 3)
-  qsa('.jyp-notification-track .jyp-notification-item').slice(0,3).forEach((a, i) => { a.textContent = HI.notifSlider[i] || a.textContent; });
+  /* Notif slider (first 3) */
+  qsa('.jyp-notification-track .jyp-notification-item').slice(0,3).forEach((a,i)=> a.textContent = HI.notifSlider[i] || a.textContent);
 
-  // Hero
+  /* Hero content */
   const hero = qs('.hero-text');
-  if (hero) {
-    const h1 = qs('h1', hero), h2 = qs('h2', hero), p1 = qsa('p', hero)[0], p2 = qsa('p', hero)[1];
+  if (hero){
+    const h1=qs('h1',hero), h2=qs('h2',hero), p1=qsa('p',hero)[0], p2=qsa('p',hero)[1];
     if (h1) h1.textContent = HI.hero.h1;
-    if (h2) h2.innerHTML = HI.hero.h2;
-    if (p1) p1.innerHTML = HI.hero.p1;
-    if (p2) p2.innerHTML = HI.hero.p2;
+    if (h2) h2.innerHTML   = HI.hero.h2;
+    if (p1) p1.innerHTML   = HI.hero.p1;
+    if (p2) p2.innerHTML   = HI.hero.p2;
   }
 
-  // How JYP Works
+  /* How JYP Works */
   const heading = qs('#program .jyp-heading');
   if (heading) heading.textContent = HI.howJyp.heading;
-  qsa('#program .jyp-box').forEach((box, i) => {
-    const t = HI.howJyp.cards[i];
-    if (!t) return;
-    const h5 = qs('h5', box), p = qs('p', box);
-    if (h5) h5.textContent = t.title;
-    if (p) p.innerHTML = t.text;
+  const subline = qs('#program .row.mb-5 p.text-muted');
+  if (subline) subline.innerHTML = HI.howJyp.subline;
+  qsa('#program .jyp-box').forEach((box,i)=>{
+    const data = HI.howJyp.cards[i]; if (!data) return;
+    const h5=qs('h5',box), p=qs('p',box);
+    if (h5) h5.textContent = data.title;
+    if (p)  p.innerHTML    = data.text;
   });
 
-  // How to Apply
+  /* How to Apply */
   const how = qs('#how');
-  if (how) {
+  if (how){
     const title = qs('.jyp2025-head h2', how);
-    const sub = qs('.jyp2025-sub', how);
-    const listItems = qsa('.jyp2025-list li', how);
+    const sub   = qs('.jyp2025-sub', how);
+    const items = qsa('.jyp2025-list li', how);
     if (title) title.textContent = HI.howToApply.title;
-    if (sub) sub.innerHTML = HI.howToApply.sub;
-    listItems.forEach((li, i) => { if (HI.howToApply.items[i]) li.innerHTML = HI.howToApply.items[i]; });
-
-    const cta1 = qs('.jyp2025-btn', how);
-    const cta2 = qs('.jyp2025-btn-outline', how);
-    if (cta1) cta1.textContent = HI.howToApply.ctas[0];
-    if (cta2) cta2.textContent = HI.howToApply.ctas[1];
+    if (sub)   sub.innerHTML     = HI.howToApply.sub;
+    items.forEach((li,i)=> { if (HI.howToApply.items[i]) li.innerHTML = HI.howToApply.items[i]; });
+    const c1 = qs('.jyp2025-btn', how), c2 = qs('.jyp2025-btn-outline', how);
+    if (c1) c1.textContent = HI.howToApply.ctas[0];
+    if (c2) c2.textContent = HI.howToApply.ctas[1];
   }
 
-  // Mission
-  const mTitle = qs('#mission .mission-heading');
-  const mText = qs('#mission .mission-text');
+  /* Mission */
+  const mTitle=qs('#mission .mission-heading'), mText=qs('#mission .mission-text');
   if (mTitle) mTitle.textContent = HI.mission.title;
-  if (mText) mText.innerHTML = HI.mission.text;
+  if (mText)  mText.innerHTML    = HI.mission.text;
 
-  // Program Flow
-  const flowTitle = qs('#program-flow-section h2');
-  if (flowTitle) flowTitle.textContent = HI.flow.title;
-  const blocks = qsa('#program-flow-section .timeline-block');
-  blocks.forEach((block, i) => {
-    const map = HI.flow.phases[i];
-    if (!map) return;
-    const h = qs('h5', block);
-    const lis = qsa('ul li', block);
+  /* Program Flow */
+  const flowTitle = qs('#program-flow-section h2'); if (flowTitle) flowTitle.textContent = HI.flow.title;
+  qsa('#program-flow-section .timeline-block').forEach((b,i)=>{
+    const map = HI.flow.phases[i]; if (!map) return;
+    const h=qs('h5',b), lis=qsa('ul li',b);
     if (h) h.textContent = map.h;
-    lis.forEach((li, idx) => { if (map.items[idx]) li.innerHTML = `<i class="bi bi-chevron-right me-2 text-accent"></i> ${map.items[idx]}`; });
+    lis.forEach((li,idx)=> { if (map.items[idx]) li.innerHTML = `<i class="bi bi-chevron-right me-2 text-accent"></i> ${map.items[idx]}`; });
   });
 
-  // Notification List
+  /* Notification list (replace) */
   const nTitle = qs('#blogs .jyp-section-heading');
-  const nList = qs('#jypNotificationList');
-  const nLoad = qs('#loadMoreBtn');
+  const nList  = qs('#jypNotificationList');
+  const nLoad  = qs('#loadMoreBtn');
   if (nTitle) nTitle.textContent = HI.notifList.title;
   if (nList) {
     nList.innerHTML = '';
@@ -2468,228 +2527,808 @@ function applyHindi() {
   }
   if (nLoad) nLoad.textContent = HI.notifList.loadMore;
 
-  // FAQ
-  const fTitle = qs('#apply .jyp-faq-heading');
-  if (fTitle) fTitle.textContent = HI.faq.title;
-  const qBtns = qsa('#apply .jyp-faq-question');
-  const aPs = qsa('#apply .jyp-faq-answer p');
-  qBtns.forEach((b, i) => { if (HI.faq.qs[i]) b.textContent = HI.faq.qs[i]; });
-  aPs.forEach((p, i) => { if (HI.faq.ans[i]) p.innerHTML = HI.faq.ans[i]; });
+  /* FAQ */
+  const fTitle = qs('#apply .jyp-faq-heading'); if (fTitle) fTitle.textContent = HI.faq.title;
+  const qBtns = qsa('#apply .jyp-faq-question'), aPs = qsa('#apply .jyp-faq-answer p');
+  qBtns.forEach((b,i)=> { if (HI.faq.qs[i])  b.textContent = HI.faq.qs[i]; });
+  aPs.forEach((p,i)=>   { if (HI.faq.ans[i]) p.innerHTML   = HI.faq.ans[i]; });
 
-  // CTA
-  const ctaH = qs('.cta-section h2');
-  const ctaP = qs('.cta-section p');
-  const ctaBtn = qs('.btn-apply-now');
-  if (ctaH) ctaH.textContent = HI.cta.title;
-  if (ctaP) ctaP.innerHTML = HI.cta.text;
+  /* CTA */
+  const ctaH=qs('.cta-section h2'), ctaP=qs('.cta-section p'), ctaBtn=qs('.btn-apply-now');
+  if (ctaH)  ctaH.textContent = HI.cta.title;
+  if (ctaP)  ctaP.innerHTML   = HI.cta.text;
   if (ctaBtn) ctaBtn.textContent = HI.applyNow;
 
-  // Footer (by columns)
+  /* Footer */
   const fCols = qsa('footer .row > div');
   const fBrandTitle = qs('h5, h6', fCols[0]);
-  const fBrandPara = qs('p', fCols[0]);
-  const linksH6 = qs('h6', fCols[1]);
-  const supportH6 = qs('h6', fCols[2]);
-  const fLinks = qsa('.footer-links li a');
+  const fBrandPara  = qs('p', fCols[0]);
+  const linksH6     = qs('h6', fCols[1]);
+  const supportH6   = qs('h6', fCols[2]);
+  const fLinks      = qsa('.footer-links li a');
   if (fBrandTitle) fBrandTitle.textContent = HI.footer.brandTitle;
-  if (fBrandPara) fBrandPara.textContent = HI.footer.brandLine;
-  if (linksH6) linksH6.textContent = HI.footer.linksTitle;    // Quick Links → महत्त्वपूर्ण लिंक
-  if (supportH6) supportH6.textContent = HI.footer.support;   // Support → सहायता
-  if (fLinks[0]) fLinks[0].textContent = HI.footer.links[0];
-  if (fLinks[1]) fLinks[1].textContent = HI.footer.links[1];
+  if (fBrandPara)  fBrandPara.textContent  = HI.footer.brandLine;
+  if (linksH6)     linksH6.textContent     = HI.footer.linksTitle;  // महत्त्वपूर्ण लिंक
+  if (supportH6)   supportH6.textContent   = HI.footer.support;     // सहायता
+  if (fLinks[0])   fLinks[0].textContent   = HI.footer.links[0];
+  if (fLinks[1])   fLinks[1].textContent   = HI.footer.links[1];
 
-  // Toggle sticky buttons
+  /* Buttons */
   btnHI.style.display = 'none';
   btnEN.style.display = 'block';
 }
 
-/* ====== RESTORE ENGLISH ====== */
-function applyEnglish() {
+/* ====== Restore English ====== */
+function applyEnglish(){
+  if (!EN_CACHE._done) cacheEnglish();
+  document.documentElement.setAttribute('lang','en');
+  document.body.classList.remove('lang-hi');
+
+  /* Logo */
+  if (EN_CACHE.logoSrc) swapLogo(EN_CACHE.logoSrc, 'JYP Logo');
+
+  /* Popup */
+  const pT=qs('#jyp-popup .jyp-popup-title'), pTx=qs('#jyp-popup .jyp-popup-text'), pBtn=qs('#jyp-popup .jyp-popup-btn');
+  if (pT)  pT.innerHTML  = EN_CACHE.popup.title;
+  if (pTx) pTx.innerHTML = EN_CACHE.popup.text;
+  if (pBtn) pBtn.textContent = EN_CACHE.popup.cta;
+
+  /* Menu */
+  qsa('.navbar-menu .navbar-nav li a').slice(0,6).forEach((a,i)=> a.textContent = EN_CACHE.menu[i] || a.textContent);
+
+  /* Hero CTAs */
+  qsa('.btn-apply, .desktop-apply.btn-apply, .mobile-apply .btn-apply').forEach(b => b.textContent = EN_CACHE.applyNow);
+  const heroExplore = qs('.hero-text a[href="#program"]'); if (heroExplore) heroExplore.textContent = EN_CACHE.heroExplore;
+  const heroApplyNowCTA = qs('.btn-apply-now'); if (heroApplyNowCTA) heroApplyNowCTA.textContent = EN_CACHE.applyNowCTA;
+
+  /* Notif slider restore */
+  qsa('.jyp-notification-track .jyp-notification-item').slice(0,3).forEach((a,i)=> { if (EN_CACHE.notifSlider[i]) a.innerHTML = EN_CACHE.notifSlider[i]; });
+
+  /* Hero */
+  const hero = qs('.hero-text');
+  if (hero){
+    const h1=qs('h1',hero), h2=qs('h2',hero), p1=qsa('p',hero)[0], p2=qsa('p',hero)[1];
+    if (h1) h1.textContent = EN_CACHE.hero.h1;
+    if (h2) h2.innerHTML   = EN_CACHE.hero.h2;
+    if (p1) p1.innerHTML   = EN_CACHE.hero.p1;
+    if (p2) p2.innerHTML   = EN_CACHE.hero.p2;
+  }
+
+  /* How JYP Works */
+  const heading = qs('#program .jyp-heading'); if (heading) heading.textContent = EN_CACHE.howJyp.heading;
+  const subline = qs('#program .row.mb-5 p.text-muted'); if (subline) subline.innerHTML = EN_CACHE.howJyp.subline;
+  qsa('#program .jyp-box').forEach((box,i)=>{
+    const t = EN_CACHE.howJyp.cards[i]; if (!t) return;
+    const h5=qs('h5',box), p=qs('p',box);
+    if (h5) h5.textContent = t.title;
+    if (p)  p.innerHTML    = t.text;
+  });
+
+  /* How to Apply */
+  const how = qs('#how');
+  if (how){
+    const title = qs('.jyp2025-head h2', how);
+    const sub   = qs('.jyp2025-sub', how);
+    const items = qsa('.jyp2025-list li', how);
+    if (title) title.textContent = EN_CACHE.howToApply.title;
+    if (sub)   sub.innerHTML     = EN_CACHE.howToApply.sub;
+    items.forEach((li,i)=> { if (EN_CACHE.howToApply.items[i]) li.innerHTML = EN_CACHE.howToApply.items[i]; });
+    const c1 = qs('.jyp2025-btn', how), c2 = qs('.jyp2025-btn-outline', how);
+    if (c1) c1.textContent = EN_CACHE.howToApply.ctas[0];
+    if (c2) c2.textContent = EN_CACHE.howToApply.ctas[1];
+  }
+
+  /* Mission */
+  const mTitle=qs('#mission .mission-heading'), mText=qs('#mission .mission-text');
+  if (mTitle) mTitle.textContent = EN_CACHE.mission.title;
+  if (mText)  mText.innerHTML    = EN_CACHE.mission.text;
+
+  /* Program Flow */
+  const flowTitle = qs('#program-flow-section h2'); if (flowTitle) flowTitle.textContent = EN_CACHE.flow.title;
+  qsa('#program-flow-section .timeline-block').forEach((b,i)=>{
+    const map = EN_CACHE.flow.phases[i]; if (!map) return;
+    const h=qs('h5',b), lis=qsa('ul li',b);
+    if (h) h.textContent = map.h;
+    lis.forEach((li,idx)=> { if (map.items[idx]) li.innerHTML = map.items[idx]; });
+  });
+
+  /* Notif list */
+  const nTitle = qs('#blogs .jyp-section-heading'); if (nTitle) nTitle.textContent = EN_CACHE.notifList.title;
+  const nLoad  = qs('#loadMoreBtn'); if (nLoad) nLoad.textContent = EN_CACHE.notifList.loadMore;
+
+  /* FAQ */
+  const fTitle = qs('#apply .jyp-faq-heading'); if (fTitle) fTitle.textContent = EN_CACHE.faq.title;
+  const qBtns = qsa('#apply .jyp-faq-question'), aPs = qsa('#apply .jyp-faq-answer p');
+  qBtns.forEach((b,i)=> { if (EN_CACHE.faq.qs[i]) b.textContent = EN_CACHE.faq.qs[i]; });
+  aPs.forEach((p,i)=>   { if (EN_CACHE.faq.ans[i]) p.innerHTML   = EN_CACHE.faq.ans[i]; });
+
+  /* CTA */
+  const ctaH=qs('.cta-section h2'), ctaP=qs('.cta-section p'), ctaBtn=qs('.btn-apply-now');
+  if (ctaH)  ctaH.textContent = EN_CACHE.cta.title;
+  if (ctaP)  ctaP.innerHTML   = EN_CACHE.cta.text;
+  if (ctaBtn) ctaBtn.textContent = EN_CACHE.cta.btn;
+
+  /* Footer */
+  const fCols = qsa('footer .row > div');
+  const fBrandTitle = qs('h5, h6', fCols[0]);
+  const fBrandPara  = qs('p', fCols[0]);
+  const linksH6     = qs('h6', fCols[1]);
+  const supportH6   = qs('h6', fCols[2]);
+  const fLinks      = qsa('.footer-links li a');
+  if (fBrandTitle) fBrandTitle.textContent = EN_CACHE.footer.brandTitle;
+  if (fBrandPara)  fBrandPara.textContent  = EN_CACHE.footer.brandLine;
+  if (linksH6)     linksH6.textContent     = EN_CACHE.footer.linksTitle;
+  EN_CACHE.footer.links.forEach((txt,i)=> { if (fLinks[i]) fLinks[i].textContent = txt; });
+  if (supportH6)   supportH6.textContent   = EN_CACHE.footer.support;
+
+  btnHI.style.display = 'block';
+  btnEN.style.display = 'none';
+}
+
+/* Buttons hook */
+btnHI.addEventListener('click', applyHindi);
+btnEN.addEventListener('click', applyEnglish);
+
+/* Hindi font when active */
+const extraStyle = document.createElement('style');
+extraStyle.innerHTML = `body.lang-hi{font-family:'Noto Sans Devanagari','Montserrat',sans-serif;}`;
+document.head.appendChild(extraStyle);
+</script>
+  
+  <script>
+/* ================== I18N: EN ↔ HI (Jagran Youth Parliament) ================== */
+/* ---- CONFIG: Hindi copy (with your requested updates) ---- */
+var HI = {
+  popup: {
+    title: 'आवेदन शुरू!',
+    text: 'जागरण युवा संसद में हिस्सा लें और भविष्य निर्माण हेतु अपने विचार रखें.',
+    cta: 'अभी आवेदन करें'
+  },
+  menu: ['परिचय','आवेदन कैसे करें','कार्यक्रम','पात्रता','अधिसूचना','सामान्य प्रश्न'],
+  applyNow: 'अभी आवेदन करें',
+  notifSlider: [
+    'जागरण युवा संसद 2025 हेतु आवेदन प्रक्रिया शुरू',
+    'आवेदन की अंतिम तिथि 31 अगस्त, 2025 है',
+    'वाद-विवाद प्रतियोगिता 10 सितम्बर 2025 से शुरू होगी'
+  ],
+  hero: {
+    h1: 'जागरण युवा संसद 2025',
+    h2: 'देश के कल में, आज बनो भागीदार',
+    p1: 'जागरण युवा संसद दैनिक जागरण की एक पहल है जिसके माध्यम से अगली पीढ़ी के प्रतिनिधियों/नीति निर्णायकों के बौद्धिक और मानसिक संरचना को सुगठित, प्रभावी और संसदीय बनाने के लिए संकल्पित है।',
+    p2: 'जागरण युवा संसद मानता है कि भारत की सबसे जटिल चुनौतियों का समाधान पुराने विचारों से नहीं, बल्कि नए दृष्टिकोणों से संभव है। यही कारण है कि जागरण युवा संसद एक ऐसा मंच है जो भारत के सबसे उज्ज्वल मस्तिष्कों को लोकतांत्रिक प्रक्रिया के माध्यम से विचारों की खोज और विमर्श में शामिल करता है।<br><br>सुगठित वाद-विवाद और विचार विमर्श के माध्यम से, जागरण युवा संसद जहाँ एक ओर देश के युवाओं की नेतृत्व क्षमता और अभिव्यक्ति कौशल को विकसित करता है, वहीं, नागरिक भागीदारी को प्रेरित भी करता है।',
+    exploreProgram: 'कार्यक्रम के बारे में जानें'
+  },
+  howJyp: {
+    heading: 'जागरण युवा संसद की प्रक्रिया',
+    subText: 'देश के कल के प्रतिनिधियों/नीति निर्धारकों के निर्माण हेतु उन्हें संसदीय वाद-विवाद का अनुभव प्रदान करना।',
+    cards: [
+      {
+        title: 'सहभागिता और वाद-विवाद',
+        text: 'स्नातक (UG) और स्नातकोत्तर (PG) स्तर पर 6 मिनट के वाद-विवाद में भाग लें।<br>विषय-आधारित तर्क प्रस्तुत करें, जिसका मूल्यांकन स्पष्ट अभिव्यक्ति और तार्किकता के आधार पर किया जाएगा।'
+      },
+      { // unchanged from earlier unless you want edits
+        title: 'कौशल विकास',
+        text: '30 दिन का ऑनलाइन प्रशिक्षण जिसमें सुचिंतित विचार प्रणाली, नीतियों की समझ, सहभागिता और कूटनीति पर फोकस किया जाएगा।'
+      },
+      {
+        title: 'सांसद और मंत्री की भूमिका का निर्वहन',
+        text: 'सांसद (MP) और मंत्री की भूमिका का निर्वहन करें।<br>दिल्ली में होने वाले 2 दिवसीय JYP सत्र में नीति-निर्माताओं के साथ वास्तविक मुद्दों पर बहस में भाग लें।'
+      }
+    ]
+  },
+  howToApply: {
+    title: 'आवेदन की प्रक्रिया',
+    sub: 'जागरण युवा संसद (JYP) की चयन प्रक्रिया केवल वाद-विवाद प्रतियोगिता के माध्यम से होगी।<br>वाद-विवाद प्रतियोगिता में भाग लेने के लिए निम्नलिखित प्रक्रिया का पालन करना आवश्यक है—',
+    items: [
+      'केवल मान्यता प्राप्त विश्वविद्यालय/कालेज के स्नातक (UG) और स्नातकोत्तर (PG) छात्र ही आवेदन कर सकते हैं।',
+      'आवेदकों को दो सदस्यीय टीम के रूप में आवेदन करना होगा।',
+      'टीम के दोनों सदस्य (साथी) एक ही फार्म में क्रमशः प्रतिभागी 1 और प्रतिभागी 2 के रूप में अपनी जानकारी भरेंगे।',
+      'फार्म के सभी कालम भरना अनिवार्य है।',
+      'पहचान प्रमाण के रूप में केवल मान्य कालेज पहचान पत्र (I-Card) ही अपलोड किया जा सकता है।',
+      'टीम को वाद-विवाद के लिए दिए गए विषयों (मोशन) में से एक का चयन करना होगा।',
+      'टीम का एक सदस्य, चुने गए विषय के पक्ष में और दूसरा सदस्य विपक्ष में अपने विचार रखेंगे।',
+      'आवेदकों को हिंदी या अंग्रेजी में से अपनी एक पसंदीदा भाषा का चयन करना होगा।',
+      'पंजीकरण की पुष्टि, आवेदकों द्वारा दिए गए ईमेल आईडी पर भेजी जाएगी।',
+      'एक जोड़ी केवल एक बार ही पंजीकरण कर सकती है।',
+      'वाद-विवाद प्रतियोगिता कालेज/विश्वविद्यालय स्तर पर आयोजित की जाएगी।',
+      'विजेताओं का चयन निर्णायक मंडल (जूरी) द्वारा टीम के रूप में किया जाएगा, व्यक्तिगत रूप से नहीं।',
+      'चयनित टीम को ईमेल के माध्यम से सूचित किया जाएगा।'
+    ],
+    ctas: ['अभी आवेदन करें','कार्यक्रम के बारे में जानें']
+  },
+  mission: {
+    title: 'हमारा उद्देश्य',
+    text: 'भारत की लोकतांत्रिक प्रक्रिया में युवाओं की सक्रिय भागीदारी सुनिश्चित करने के लिए उन्हें ज्ञान, आत्मविश्वास और नेतृत्व कौशल से सशक्त बनाना।'
+  },
+  flow: {
+    title: 'कार्यक्रम का क्रम',
+    phases: [
+      { h: 'चरण 1', items: ['वादविवाद के लिए साथी का चयन।','आधिकारिक वेबसाइट पर पंजीकरण।','चर्चा के विषय का चयन।'] },
+      { h: 'चरण 2', items: ['कालेज एवं अंतर-कालेज वाद-विवाद में भाग लेना (UG छात्रों के लिए)।','विभागीय एवं अंतर-विभागीय वाद-विवाद में भाग लेना (PG छात्रों के लिए)।','निर्णायक मंडल (जूरी) द्वारा विजेताओं का चयन।'] },
+      { h: 'चरण 3', items: ['संसदीय प्रक्रियाओं पर 15 दिनों का प्रशिक्षण।','विभिन्न विधेयकों और कानूनों पर 15 दिनों का प्रशिक्षण।'] },
+      { h: 'चरण 4', items: ['चयनित JYP सदस्य दिल्ली में 2 दिवसीय सत्र में भाग लेंगे।','नीति-निर्माताओं की उपस्थिति में बहस और चर्चा करेंगे।'] }
+    ]
+  },
+  notifList: {
+    title: 'महत्त्वपूर्ण सूचना',
+    items: [
+      { message: '📢 जागरण युवा संसद 2025 हेतु आवेदन प्रक्रिया शुरू!', date: '15 अगस्त 2025 से प्रारंभ', url: '#' },
+      { message: '⌛ आवेदन की अंतिम तिथि: 31 अगस्त 2025', date: '31 अगस्त 2025', url: '#' },
+      { message: '🤵 वाद-विवाद प्रतियोगिता: 10 सितम्बर 2025 से प्रारंभ', date: '10 सितम्बर 2025', url: '#' },
+      { message: '🏆 विजेताओं की घोषणा विश्वविद्यालय/कॉलेज स्तर पर 2026 में की जाएगी', date: '2026', url: '#' }
+    ],
+    loadMore: 'और सूचनाएँ देखें'
+  },
+  faq: {
+    title: 'सामान्य प्रश्न',
+    qs: [
+      'जागरण युवा संसद में कौन आवेदन कर सकता है?','क्या आवेदन शुल्क है?','कार्यक्रम का प्रारूप क्या है?','क्या यात्रा भत्ता का भुगतान किया जाएगा?','नामांकन की सूचना कैसे प्राप्त होगी?'
+    ],
+    ans: [
+      'केवल स्नातक एवं परास्नातक के विद्यार्थियों हेतु मान्य।',
+      'नहीं।',
+      'कार्यक्रम पूर्व-निर्धारित प्रस्तावों पर आधारित संसदीय वाद-विवाद के प्रारूप में आयोजित किया जाएगा, जिसका मूल्यांकन अभिव्यक्ति, तार्किक क्षमता और टीम वर्क के आधार पर किया जाएगा।',
+      'नहीं।',
+      'चुने गए प्रतिभागियों की सूचना हमारी वेबसाइट पर जारी की जाएगी और आधिकारिक ईमेल द्वारा भी सहभागियों तक पहुँचाई जाएगी।'
+    ]
+  },
+  cta: { title: 'क्या आप भविष्य के निर्माण के लिए तैयार हैं?', text: 'जागरण युवा संसद में हिस्सा लें और भविष्य निर्माण हेतु अपने विचार रखें.' },
+  footer: {
+    brandTitle: 'जागरण युवा संसद',
+    brandLine: 'देश के कल में आज बनो भागीदार',
+    linksTitle: 'महत्त्वपूर्ण लिंक',
+    links: ['मुखपृष्ठ','अधिसूचना'],
+    support: 'सहायता'
+  },
+  logoHindiSrc: 'https://i.ibb.co/4bkhDQy/Dainik-Jagran.png'
+};
+
+/* ---- UTIL ---- */
+function qs(s, root){ return (root||document).querySelector(s); }
+function qsa(s, root){ return Array.prototype.slice.call((root||document).querySelectorAll(s)); }
+
+/* ---- Cache English text so we can restore ---- */
+var EN_CACHE = { _done:false };
+function cacheEnglish(){
+  if (EN_CACHE._done) return;
+  var logoImg = qs('.navbar-brand img');
+  EN_CACHE.logoSrc = logoImg ? (logoImg.currentSrc || logoImg.src) : '';
+
+  EN_CACHE.popup = {
+    title: qs('#jyp-popup .jyp-popup-title') ? qs('#jyp-popup .jyp-popup-title').innerHTML : '',
+    text: qs('#jyp-popup .jyp-popup-text') ? qs('#jyp-popup .jyp-popup-text').innerHTML : '',
+    cta:  qs('#jyp-popup .jyp-popup-btn') ? qs('#jyp-popup .jyp-popup-btn').textContent : ''
+  };
+
+  EN_CACHE.menu = qsa('.navbar-menu .navbar-nav li a').slice(0,6).map(function(a){ return a.textContent.trim(); });
+
+  EN_CACHE.applyNow = qs('.btn-apply') ? qs('.btn-apply').textContent.trim() : 'Apply Now';
+  EN_CACHE.applyNowCTA = qs('.btn-apply-now') ? qs('.btn-apply-now').textContent.trim() : 'Apply Now';
+  EN_CACHE.hero = {
+    h1: qs('.hero-text h1') ? qs('.hero-text h1').textContent : '',
+    h2: qs('.hero-text h2') ? qs('.hero-text h2').innerHTML : '',
+    p1: qsa('.hero-text p')[0] ? qsa('.hero-text p')[0].innerHTML : '',
+    p2: qsa('.hero-text p')[1] ? qsa('.hero-text p')[1].innerHTML : '',
+    exploreProgram: (function(){
+      var btn = qs('.hero-buttons a.btn.btn-outline-dark');
+      return btn ? btn.textContent.trim() : '';
+    })()
+  };
+
+  EN_CACHE.howJyp = {
+    heading: qs('#program .jyp-heading') ? qs('#program .jyp-heading').textContent : '',
+    subText: (function(){ var t = qs('#program .text-muted'); return t ? t.innerHTML : ''; })(),
+    cards: qsa('#program .jyp-box').map(function(box){
+      return { title: qs('h5',box)?qs('h5',box).textContent:'', text: qs('p',box)?qs('p',box).innerHTML:'' };
+    })
+  };
+
+  EN_CACHE.howToApply = {
+    title: qs('#how .jyp2025-head h2') ? qs('#how .jyp2025-head h2').textContent : '',
+    sub: qs('#how .jyp2025-sub') ? qs('#how .jyp2025-sub').innerHTML : '',
+    items: qsa('#how .jyp2025-list li').map(function(li){ return li.innerHTML; }),
+    ctas: [
+      qs('#how .jyp2025-btn') ? qs('#how .jyp2025-btn').textContent.trim() : '',
+      qs('#how .jyp2025-btn-outline') ? qs('#how .jyp2025-btn-outline').textContent.trim() : ''
+    ]
+  };
+
+  EN_CACHE.mission = {
+    title: qs('#mission .mission-heading') ? qs('#mission .mission-heading').textContent : '',
+    text:  qs('#mission .mission-text') ? qs('#mission .mission-text').innerHTML : ''
+  };
+
+  EN_CACHE.flow = {
+    title: qs('#program-flow-section h2') ? qs('#program-flow-section h2').textContent : '',
+    phases: qsa('#program-flow-section .timeline-block').map(function(block){
+      return {
+        h: qs('h5',block) ? qs('h5',block).textContent : '',
+        items: qsa('ul li',block).map(function(li){ return li.innerHTML; })
+      };
+    })
+  };
+
+  EN_CACHE.notifList = {
+    title: qs('#blogs .jyp-section-heading') ? qs('#blogs .jyp-section-heading').textContent : '',
+    loadMore: qs('#loadMoreBtn') ? qs('#loadMoreBtn').textContent : ''
+  };
+
+  EN_CACHE.faq = {
+    title: qs('#apply .jyp-faq-heading') ? qs('#apply .jyp-faq-heading').textContent : '',
+    qs: qsa('#apply .jyp-faq-question').map(function(b){ return b.textContent.trim(); }),
+    ans: qsa('#apply .jyp-faq-answer p').map(function(p){ return p.innerHTML; })
+  };
+
+  EN_CACHE.cta = {
+    title: qs('.cta-section h2') ? qs('.cta-section h2').textContent : '',
+    text:  qs('.cta-section p') ? qs('.cta-section p').innerHTML : '',
+    btn:   qs('.btn-apply-now') ? qs('.btn-apply-now').textContent : ''
+  };
+
+  var fCols = qsa('footer .row > div');
+  EN_CACHE.footer = {
+    brandTitle: fCols[0] ? (qs('h5, h6', fCols[0]) ? qs('h5, h6', fCols[0]).textContent : '') : '',
+    brandLine:  fCols[0] ? (qs('p', fCols[0]) ? qs('p', fCols[0]).textContent : '') : '',
+    linksTitle: fCols[1] ? (qs('h6', fCols[1]) ? qs('h6', fCols[1]).textContent : '') : '',
+    links: qsa('.footer-links li a').map(function(a){ return a.textContent.trim(); }),
+    support: fCols[2] ? (qs('h6', fCols[2]) ? qs('h6', fCols[2]).textContent : '') : ''
+  };
+
+  EN_CACHE._done = true;
+}
+
+/* ---- Helpers ---- */
+function setLangClass(isHindi){
+  document.documentElement.setAttribute('lang', isHindi ? 'hi' : 'en');
+  if (isHindi) { document.body.classList.add('lang-hi'); }
+  else { document.body.classList.remove('lang-hi'); }
+}
+function swapLogo(src, alt){
+  var img = qs('.navbar-brand img') || qs('header .navbar-brand img') || qs('img[alt*="JYP"]') || qs('img[alt*="Jagran"]');
+  if (!img) return;
+  try {
+    var u = new URL(src, location.href);
+    u.searchParams.set('v','hi');
+    img.src = u.toString();
+  } catch (e) {
+    img.src = src + (src.indexOf('?')>-1 ? '&':'?') + 'v=hi';
+  }
+  if (alt) img.alt = alt;
+}
+
+/* ---- APPLY Hindi ---- */
+function applyHindi(){
+  cacheEnglish();
+  setLangClass(true);
+
+  // Logo
+  swapLogo(HI.logoHindiSrc, 'Dainik Jagran (Hindi)');
+
+  // Popup
+  var pT = qs('#jyp-popup .jyp-popup-title');
+  var pTx = qs('#jyp-popup .jyp-popup-text');
+  var pBtn = qs('#jyp-popup .jyp-popup-btn');
+  if (pT) pT.textContent = HI.popup.title;
+  if (pTx) pTx.textContent = HI.popup.text;
+  if (pBtn) pBtn.textContent = HI.popup.cta;
+
+  // Menu (first 6)
+  qsa('.navbar-menu .navbar-nav li a').slice(0,6).forEach(function(a,i){ if(HI.menu[i]) a.textContent = HI.menu[i]; });
+
+  // Apply buttons
+  qsa('.btn-apply, .desktop-apply.btn-apply, .mobile-apply .btn-apply').forEach(function(b){ b.textContent = HI.applyNow; });
+  var heroCTAButton = qs('.btn-apply-now'); if (heroCTAButton) heroCTAButton.textContent = HI.applyNow;
+
+  // Notification slider (first 3)
+  qsa('.jyp-notification-track .jyp-notification-item').slice(0,3).forEach(function(a,i){ if(HI.notifSlider[i]) a.textContent = HI.notifSlider[i]; });
+
+  // Hero content
+  var hero = qs('.hero-text');
+  if (hero){
+    var h1 = qs('h1', hero), h2 = qs('h2', hero), p1 = qsa('p', hero)[0], p2 = qsa('p', hero)[1];
+    if (h1) h1.textContent = HI.hero.h1;
+    if (h2) h2.innerHTML    = HI.hero.h2;
+    if (p1) p1.innerHTML    = HI.hero.p1;
+    if (p2) p2.innerHTML    = HI.hero.p2;
+    var exploreBtn = qs('.hero-buttons a.btn.btn-outline-dark', hero);
+    if (exploreBtn) exploreBtn.textContent = HI.hero.exploreProgram;
+  }
+
+  // How JYP Works (heading + sub)
+  var heading = qs('#program .jyp-heading');
+  if (heading) heading.textContent = HI.howJyp.heading;
+  var subTxt = qs('#program .text-muted');
+  if (subTxt) subTxt.innerHTML = HI.howJyp.subText;
+  qsa('#program .jyp-box').forEach(function(box,i){
+    var t = HI.howJyp.cards[i]; if(!t) return;
+    var h5 = qs('h5', box), p = qs('p', box);
+    if (h5) h5.textContent = t.title;
+    if (p)  p.innerHTML    = t.text;
+  });
+
+  // How to Apply
+  var how = qs('#how');
+  if (how){
+    var title = qs('.jyp2025-head h2', how);
+    var sub   = qs('.jyp2025-sub', how);
+    var listItems = qsa('.jyp2025-list li', how);
+    if (title) title.textContent = HI.howToApply.title;
+    if (sub)   sub.innerHTML     = HI.howToApply.sub;
+    listItems.forEach(function(li,i){ if (HI.howToApply.items[i]) li.innerHTML = HI.howToApply.items[i]; });
+    var cta1 = qs('.jyp2025-btn', how);
+    var cta2 = qs('.jyp2025-btn-outline', how);
+    if (cta1) cta1.textContent = HI.howToApply.ctas[0];
+    if (cta2) cta2.textContent = HI.howToApply.ctas[1];
+  }
+
+  // Mission
+  var mTitle = qs('#mission .mission-heading');
+  var mText  = qs('#mission .mission-text');
+  if (mTitle) mTitle.textContent = HI.mission.title;
+  if (mText)  mText.innerHTML    = HI.mission.text;
+
+  // Program Flow
+  var flowTitle = qs('#program-flow-section h2');
+  if (flowTitle) flowTitle.textContent = HI.flow.title;
+  var blocks = qsa('#program-flow-section .timeline-block');
+  blocks.forEach(function(block, i){
+    var map = HI.flow.phases[i]; if(!map) return;
+    var h = qs('h5', block); var lis = qsa('ul li', block);
+    if (h) h.textContent = map.h;
+    lis.forEach(function(li, idx){
+      if (map.items[idx]) li.innerHTML = '<i class="bi bi-chevron-right me-2 text-accent"></i> ' + map.items[idx];
+      else li.parentNode.removeChild(li);
+    });
+  });
+
+  // Notification List
+  var nTitle = qs('#blogs .jyp-section-heading');
+  var nList  = qs('#jypNotificationList');
+  var nLoad  = qs('#loadMoreBtn');
+  if (nTitle) nTitle.textContent = HI.notifList.title;
+  if (nList){
+    nList.innerHTML = '';
+    HI.notifList.items.forEach(function(it){
+      var card = document.createElement('div');
+      card.className = 'jyp-notification-card';
+      card.innerHTML = '<a href="'+(it.url||'#')+'" target="_blank">'+it.message+'</a><span>'+it.date+'</span>';
+      nList.appendChild(card);
+    });
+  }
+  if (nLoad) nLoad.textContent = HI.notifList.loadMore;
+
+  // FAQ
+  var fTitle = qs('#apply .jyp-faq-heading');
+  if (fTitle) fTitle.textContent = HI.faq.title;
+  var qBtns = qsa('#apply .jyp-faq-question');
+  var aPs   = qsa('#apply .jyp-faq-answer p');
+  qBtns.forEach(function(b,i){ if (HI.faq.qs[i]) b.textContent = HI.faq.qs[i]; });
+  aPs.forEach(function(p,i){ if (HI.faq.ans[i]) p.innerHTML   = HI.faq.ans[i]; });
+
+  // CTA
+  var ctaH  = qs('.cta-section h2');
+  var ctaP  = qs('.cta-section p');
+  var ctaBtn= qs('.btn-apply-now');
+  if (ctaH)  ctaH.textContent  = HI.cta.title;
+  if (ctaP)  ctaP.innerHTML    = HI.cta.text;
+  if (ctaBtn)ctaBtn.textContent= HI.applyNow;
+
+  // Footer
+  var fCols = qsa('footer .row > div');
+  var fBrandTitle = fCols[0] ? qs('h5, h6', fCols[0]) : null;
+  var fBrandPara  = fCols[0] ? qs('p', fCols[0]) : null;
+  var linksH6     = fCols[1] ? qs('h6', fCols[1]) : null;
+  var supportH6   = fCols[2] ? qs('h6', fCols[2]) : null;
+  var fLinks      = qsa('.footer-links li a');
+  if (fBrandTitle) fBrandTitle.textContent = HI.footer.brandTitle;
+  if (fBrandPara)  fBrandPara.textContent  = HI.footer.brandLine;
+  if (linksH6)     linksH6.textContent     = HI.footer.linksTitle;
+  if (supportH6)   supportH6.textContent   = HI.footer.support;
+  if (fLinks[0])   fLinks[0].textContent   = HI.footer.links[0];
+  if (fLinks[1])   fLinks[1].textContent   = HI.footer.links[1];
+
+  // Show EN button, hide HI button
+  var btnHI = document.getElementById('gt-hi');
+  var btnEN = document.getElementById('gt-en');
+  if (btnHI) btnHI.style.display = 'none';
+  if (btnEN) btnEN.style.display = 'block';
+}
+
+/* ---- RESTORE English ---- */
+function applyEnglish(){
   if (!EN_CACHE._done) return;
   setLangClass(false);
 
-  // Logo restore
-  const logoImg = document.querySelector('.navbar-brand img');
-  if (logoImg && EN_CACHE.logoSrc) {
-    logoImg.src = EN_CACHE.logoSrc;
-    logoImg.alt = "JYP Logo";
-  }
+  // Logo
+  if (EN_CACHE.logoSrc) swapLogo(EN_CACHE.logoSrc, 'JYP Logo');
 
   // Popup
-  const pT = qs('#jyp-popup .jyp-popup-title');
-  const pTx = qs('#jyp-popup .jyp-popup-text');
-  const pBtn = qs('#jyp-popup .jyp-popup-btn');
-  if (pT) pT.innerHTML = EN_CACHE.popup.title;
+  var pT = qs('#jyp-popup .jyp-popup-title');
+  var pTx= qs('#jyp-popup .jyp-popup-text');
+  var pBtn=qs('#jyp-popup .jyp-popup-btn');
+  if (pT)  pT.innerHTML  = EN_CACHE.popup.title;
   if (pTx) pTx.innerHTML = EN_CACHE.popup.text;
   if (pBtn) pBtn.textContent = EN_CACHE.popup.cta;
 
   // Menu
-  qsa('.navbar-menu .navbar-nav li a').slice(0,6).forEach((a, i) => { if (EN_CACHE.menu[i]) a.textContent = EN_CACHE.menu[i]; });
+  qsa('.navbar-menu .navbar-nav li a').slice(0,6).forEach(function(a,i){ if(EN_CACHE.menu[i]) a.textContent = EN_CACHE.menu[i]; });
 
-  // Apply Now buttons
-  qsa('.btn-apply, .desktop-apply.btn-apply, .mobile-apply .btn-apply').forEach(b => b.textContent = EN_CACHE.applyNow);
-  const heroCTA = qs('.btn-apply-now'); if (heroCTA) heroCTA.textContent = EN_CACHE.applyNowCTA;
+  // Apply buttons
+  qsa('.btn-apply, .desktop-apply.btn-apply, .mobile-apply .btn-apply').forEach(function(b){ b.textContent = EN_CACHE.applyNow; });
+  var heroCTAButton = qs('.btn-apply-now'); if (heroCTAButton) heroCTAButton.textContent = EN_CACHE.applyNowCTA;
 
-  // Notif slider (restore first 3)
-  qsa('.jyp-notification-track .jyp-notification-item').slice(0,3).forEach((a, i) => { if (EN_CACHE.notifSlider[i]) a.innerHTML = EN_CACHE.notifSlider[i]; });
+  // Notif slider
+  qsa('.jyp-notification-track .jyp-notification-item').slice(0,3).forEach(function(a,i){ if(EN_CACHE.notifSlider && EN_CACHE.notifSlider[i]) a.innerHTML = EN_CACHE.notifSlider[i]; });
 
   // Hero
-  const hero = qs('.hero-text');
-  if (hero) {
-    const h1 = qs('h1', hero), h2 = qs('h2', hero), p1 = qsa('p', hero)[0], p2 = qsa('p', hero)[1];
+  var hero = qs('.hero-text');
+  if (hero){
+    var h1 = qs('h1', hero), h2 = qs('h2', hero), p1 = qsa('p', hero)[0], p2 = qsa('p', hero)[1];
     if (h1) h1.textContent = EN_CACHE.hero.h1;
-    if (h2) h2.innerHTML = EN_CACHE.hero.h2;
-    if (p1) p1.innerHTML = EN_CACHE.hero.p1;
-    if (p2) p2.innerHTML = EN_CACHE.hero.p2;
+    if (h2) h2.innerHTML    = EN_CACHE.hero.h2;
+    if (p1) p1.innerHTML    = EN_CACHE.hero.p1;
+    if (p2) p2.innerHTML    = EN_CACHE.hero.p2;
+    var exploreBtn = qs('.hero-buttons a.btn.btn-outline-dark', hero);
+    if (exploreBtn) exploreBtn.textContent = EN_CACHE.hero.exploreProgram || exploreBtn.textContent;
   }
 
   // How JYP Works
-  const heading = qs('#program .jyp-heading');
+  var heading = qs('#program .jyp-heading');
   if (heading) heading.textContent = EN_CACHE.howJyp.heading;
-  qsa('#program .jyp-box').forEach((box, i) => {
-    const t = EN_CACHE.howJyp.cards[i];
-    if (!t) return;
-    const h5 = qs('h5', box), p = qs('p', box);
+  var subTxt = qs('#program .text-muted');
+  if (subTxt) subTxt.innerHTML = EN_CACHE.howJyp.subText;
+  qsa('#program .jyp-box').forEach(function(box,i){
+    var t = EN_CACHE.howJyp.cards[i]; if(!t) return;
+    var h5 = qs('h5', box), p = qs('p', box);
     if (h5) h5.textContent = t.title;
-    if (p) p.innerHTML = t.text;
+    if (p)  p.innerHTML    = t.text;
   });
 
   // How to Apply
-  const how = qs('#how');
-  if (how) {
-    const title = qs('.jyp2025-head h2', how);
-    const sub = qs('.jyp2025-sub', how);
-    const listItems = qsa('.jyp2025-list li', how);
+  var how = qs('#how');
+  if (how){
+    var title = qs('.jyp2025-head h2', how);
+    var sub   = qs('.jyp2025-sub', how);
+    var listItems = qsa('.jyp2025-list li', how);
     if (title) title.textContent = EN_CACHE.howToApply.title;
-    if (sub) sub.innerHTML = EN_CACHE.howToApply.sub;
-    listItems.forEach((li, i) => { if (EN_CACHE.howToApply.items[i]) li.innerHTML = EN_CACHE.howToApply.items[i]; });
-
-    const cta1 = qs('.jyp2025-btn', how);
-    const cta2 = qs('.jyp2025-btn-outline', how);
+    if (sub)   sub.innerHTML     = EN_CACHE.howToApply.sub;
+    listItems.forEach(function(li,i){ if (EN_CACHE.howToApply.items[i]) li.innerHTML = EN_CACHE.howToApply.items[i]; });
+    var cta1 = qs('.jyp2025-btn', how);
+    var cta2 = qs('.jyp2025-btn-outline', how);
     if (cta1) cta1.textContent = EN_CACHE.howToApply.ctas[0];
     if (cta2) cta2.textContent = EN_CACHE.howToApply.ctas[1];
   }
 
   // Mission
-  const mTitle = qs('#mission .mission-heading');
-  const mText = qs('#mission .mission-text');
+  var mTitle = qs('#mission .mission-heading');
+  var mText  = qs('#mission .mission-text');
   if (mTitle) mTitle.textContent = EN_CACHE.mission.title;
-  if (mText) mText.innerHTML = EN_CACHE.mission.text;
+  if (mText)  mText.innerHTML    = EN_CACHE.mission.text;
 
   // Program Flow
-  const flowTitle = qs('#program-flow-section h2');
+  var flowTitle = qs('#program-flow-section h2');
   if (flowTitle) flowTitle.textContent = EN_CACHE.flow.title;
-  const blocks = qsa('#program-flow-section .timeline-block');
-  blocks.forEach((block, i) => {
-    const map = EN_CACHE.flow.phases[i];
-    if (!map) return;
-    const h = qs('h5', block);
-    const lis = qsa('ul li', block);
+  var blocks = qsa('#program-flow-section .timeline-block');
+  blocks.forEach(function(block,i){
+    var map = EN_CACHE.flow.phases[i]; if(!map) return;
+    var h = qs('h5', block), lis = qsa('ul li', block);
     if (h) h.textContent = map.h;
-    lis.forEach((li, idx) => { if (map.items[idx]) li.innerHTML = map.items[idx]; });
+    lis.forEach(function(li, idx){
+      if (map.items[idx]) li.innerHTML = map.items[idx];
+    });
   });
 
-  // Notification List (title & button)
-  const nTitle = qs('#blogs .jyp-section-heading');
-  const nLoad = qs('#loadMoreBtn');
+  // Notification List
+  var nTitle = qs('#blogs .jyp-section-heading');
+  var nLoad  = qs('#loadMoreBtn');
   if (nTitle) nTitle.textContent = EN_CACHE.notifList.title;
-  if (nLoad) nLoad.textContent = EN_CACHE.notifList.loadMore;
+  if (nLoad)  nLoad.textContent  = EN_CACHE.notifList.loadMore;
 
   // FAQ
-  const fTitle = qs('#apply .jyp-faq-heading');
-  if (fTitle) fTitle.textContent = EN_CACHE.faq.title;
-  const qBtns = qsa('#apply .jyp-faq-question');
-  const aPs = qsa('#apply .jyp-faq-answer p');
-  qBtns.forEach((b, i) => { if (EN_CACHE.faq.qs[i]) b.textContent = EN_CACHE.faq.qs[i]; });
-  aPs.forEach((p, i) => { if (EN_CACHE.faq.ans[i]) p.innerHTML = EN_CACHE.faq.ans[i]; });
+  var fTitle = qs('#apply .jyp-faq-heading'); if (fTitle) fTitle.textContent = EN_CACHE.faq.title;
+  var qBtns = qsa('#apply .jyp-faq-question'); var aPs = qsa('#apply .jyp-faq-answer p');
+  qBtns.forEach(function(b,i){ if (EN_CACHE.faq.qs[i]) b.textContent = EN_CACHE.faq.qs[i]; });
+  aPs.forEach(function(p,i){ if (EN_CACHE.faq.ans[i]) p.innerHTML    = EN_CACHE.faq.ans[i]; });
 
   // CTA
-  const ctaH = qs('.cta-section h2');
-  const ctaP = qs('.cta-section p');
-  const ctaBtn = qs('.btn-apply-now');
-  if (ctaH) ctaH.textContent = EN_CACHE.cta.title;
-  if (ctaP) ctaP.innerHTML = EN_CACHE.cta.text;
-  if (ctaBtn) ctaBtn.textContent = EN_CACHE.cta.btn;
+  var ctaH  = qs('.cta-section h2');
+  var ctaP  = qs('.cta-section p');
+  var ctaBtn= qs('.btn-apply-now');
+  if (ctaH)  ctaH.textContent  = EN_CACHE.cta.title;
+  if (ctaP)  ctaP.innerHTML    = EN_CACHE.cta.text;
+  if (ctaBtn)ctaBtn.textContent= EN_CACHE.cta.btn;
 
-  // Footer (by columns)
-  const fCols = qsa('footer .row > div');
-  const fBrandTitle = qs('h5, h6', fCols[0]);
-  const fBrandPara = qs('p', fCols[0]);
-  const linksH6 = qs('h6', fCols[1]);
-  const supportH6 = qs('h6', fCols[2]);
-  const fLinks = qsa('.footer-links li a');
+  // Footer
+  var fCols = qsa('footer .row > div');
+  var fBrandTitle = fCols[0] ? qs('h5, h6', fCols[0]) : null;
+  var fBrandPara  = fCols[0] ? qs('p', fCols[0]) : null;
+  var linksH6     = fCols[1] ? qs('h6', fCols[1]) : null;
+  var supportH6   = fCols[2] ? qs('h6', fCols[2]) : null;
+  var fLinks      = qsa('.footer-links li a');
   if (fBrandTitle) fBrandTitle.textContent = EN_CACHE.footer.brandTitle;
-  if (fBrandPara) fBrandPara.textContent = EN_CACHE.footer.brandLine;
-  if (linksH6) linksH6.textContent = EN_CACHE.footer.linksTitle;
-  EN_CACHE.footer.links.forEach((txt, i) => { if (fLinks[i]) fLinks[i].textContent = txt; });
-  if (supportH6) supportH6.textContent = EN_CACHE.footer.support;
+  if (fBrandPara)  fBrandPara.textContent  = EN_CACHE.footer.brandLine;
+  if (linksH6)     linksH6.textContent     = EN_CACHE.footer.linksTitle;
+  if (supportH6)   supportH6.textContent   = EN_CACHE.footer.support;
+  EN_CACHE.footer.links.forEach(function(txt,i){ if (fLinks[i]) fLinks[i].textContent = txt; });
 
-  // Toggle sticky buttons
-  btnHI.style.display = 'block';
-  btnEN.style.display = 'none';
+  // Show HI button, hide EN button
+  var btnHI = document.getElementById('gt-hi');
+  var btnEN = document.getElementById('gt-en');
+  if (btnEN) btnEN.style.display = 'none';
+  if (btnHI) btnHI.style.display = 'block';
 }
 
-/* Attach events */
-btnHI.addEventListener('click', applyHindi);
-btnEN.addEventListener('click', applyEnglish);
+/* ---- Bind toggle AFTER DOM is ready (fixes your issue) ---- */
+window.addEventListener('DOMContentLoaded', function(){
+  // nicer font for Hindi
+  var style = document.createElement('style');
+  style.innerHTML = "body.lang-hi{font-family:'Noto Sans Devanagari','Montserrat',sans-serif;}";
+  document.head.appendChild(style);
 
-/* Optional: nicer font handling when Hindi is active */
-const style = document.createElement('style');
-style.innerHTML = `
-  body.lang-hi { font-family: 'Noto Sans Devanagari', 'Montserrat', sans-serif; }
-`;
-document.head.appendChild(style);
-</script>
-<script>
-/* ==== PATCH: force-reliable logo swap with cache-busting ==== */
-document.addEventListener('DOMContentLoaded', function () {
-  const HINDI_LOGO = 'https://i.ibb.co/4bkhDQy/Dainik-Jagran.png';
+  // Cache English once DOM is up
+  cacheEnglish();
 
-  function getLogoImg() {
-    return (
-      document.querySelector('.navbar-brand img') ||
-      document.querySelector('header .navbar-brand img') ||
-      document.querySelector('img[alt*="JYP"]') ||
-      document.querySelector('img[alt*="Jagran"]')
-    );
+  var btnHI = document.getElementById('gt-hi');
+  var btnEN = document.getElementById('gt-en');
+  if (btnHI){
+    btnHI.addEventListener('click', function(e){
+      e.preventDefault(); applyHindi();
+      btnHI.style.display = 'none'; if (btnEN) btnEN.style.display = 'block';
+    });
+  }
+  if (btnEN){
+    btnEN.addEventListener('click', function(e){
+      e.preventDefault(); applyEnglish();
+      btnEN.style.display = 'none'; if (btnHI) btnHI.style.display = 'block';
+    });
   }
 
-  function swapLogo(src, alt) {
-    const img = getLogoImg();
-    if (!img) return;
-    // cache-bust so the browser actually reloads the new image
-    try {
-      const u = new URL(src, location.href);
-      u.searchParams.set('v', 'hi'); // any value works
-      img.src = u.toString();
-    } catch (_) {
-      // fallback if URL constructor fails (very old browsers)
-      img.src = src + (src.includes('?') ? '&' : '?') + 'v=hi';
-    }
-    if (alt) img.alt = alt;
+  /* ---- Block the late "India@2047" injection without touching your other code ---- */
+  var BAD = /India@2047|Last Minute Addition/i;
+  if (typeof window.renderNotifications === 'function'){
+    var _render = window.renderNotifications;
+    window.renderNotifications = function(){
+      if (Array.isArray(window.notifications)){
+        window.notifications = window.notifications.filter(function(it){
+          var msg = (it && it.message) ? it.message : (typeof it==='string'?it:'');
+          return !BAD.test(msg);
+        });
+      }
+      return _render.apply(this, arguments);
+    };
   }
-
-  // Save original once (if your main script hasn't already)
-  window.EN_CACHE = window.EN_CACHE || {};
-  if (!EN_CACHE.logoSrc) {
-    const cur = getLogoImg();
-    if (cur) EN_CACHE.logoSrc = cur.currentSrc || cur.src;
-  }
-
-  // Wrap existing handlers so your full i18n still runs
-  const _applyHindi = window.applyHindi;
-  window.applyHindi = function () {
-    if (typeof _applyHindi === 'function') _applyHindi();
-    swapLogo(HINDI_LOGO, 'Dainik Jagran (Hindi)');
-  };
-
-  const _applyEnglish = window.applyEnglish;
-  window.applyEnglish = function () {
-    if (typeof _applyEnglish === 'function') _applyEnglish();
-    if (EN_CACHE.logoSrc) swapLogo(EN_CACHE.logoSrc, 'JYP Logo');
-  };
 });
 </script>
+  
+  <script>
+/* === Notifications: hide India@2047 + translate to Hindi on toggle === */
+(function () {
+  var BAD = /India@2047|Last\s*Minute\s*Addition/i;
+
+  var mapToHindi = [
+    {
+      match: /Registrations\s+for\s+Jagran\s+Youth\s+Parliament\s+2025\s+are\s+now\s+open/i,
+      hi: '📢 जागरण युवा संसद 2025 हेतु आवेदन प्रक्रिया शुरू!',
+      date: { '15th Aug 2025': '15 अगस्त 2025 से प्रारंभ' }
+    },
+    {
+      match: /Last\s+day\s+of\s+the\s+registration/i,
+      hi: '⌛ आवेदन की अंतिम तिथि: 31 अगस्त 2025',
+      dateReplace: '31 अगस्त 2025'
+    },
+    {
+      match: /Debate\s+will\s+start\s+from/i,
+      hi: '🤵 वाद-विवाद प्रतियोगिता: 10 सितम्बर 2025 से प्रारंभ',
+      dateReplace: '10 सितम्बर 2025'
+    },
+    {
+      match: /All\s+the\s+winners\s+will\s+be\s+shared\s+at\s+universities\/college\s+level/i,
+      hi: '🏆 विजेताओं की घोषणा विश्वविद्यालय/कॉलेज स्तर पर 2026 में की जाएगी',
+      dateReplace: '2026'
+    }
+  ];
+
+  function translateAndSanitizeList() {
+    var list = document.getElementById('jypNotificationList');
+    if (!list) return;
+
+    [].forEach.call(list.querySelectorAll('.jyp-notification-card'), function (card) {
+      var a = card.querySelector('a');
+      var span = card.querySelector('span');
+      var text = (a && a.textContent || '').trim();
+
+      /* 1) Drop the unwanted “India@2047” card */
+      if (BAD.test(text)) {
+        card.remove();
+        return;
+      }
+
+      /* 2) If Hindi is active, translate visible cards */
+      if (document.documentElement.getAttribute('lang') === 'hi') {
+        for (var i = 0; i < mapToHindi.length; i++) {
+          var rule = mapToHindi[i];
+          if (rule.match.test(text)) {
+            if (a) a.textContent = rule.hi;
+            if (span) {
+              if (rule.dateReplace) span.textContent = rule.dateReplace;
+              else if (rule.date && rule.date[span.textContent]) span.textContent = rule.date[span.textContent];
+            }
+            break;
+          }
+        }
+      }
+    });
+  }
+
+  /* Wrap renderNotifications so every render is cleaned & translated */
+  function patchRender() {
+    if (typeof window.renderNotifications === 'function' && !window.renderNotifications.__patched) {
+      var _orig = window.renderNotifications;
+      window.renderNotifications = function () {
+        var r = _orig.apply(this, arguments);
+        translateAndSanitizeList();
+        return r;
+      };
+      window.renderNotifications.__patched = true;
+    }
+  }
+
+  /* Re-run on any DOM changes in the list (covers late injections) */
+  function watchList() {
+    var el = document.getElementById('jypNotificationList');
+    if (!el) return;
+    var mo = new MutationObserver(function (m) {
+      for (var i = 0; i < m.length; i++) {
+        if (m[i].addedNodes && m[i].addedNodes.length) {
+          translateAndSanitizeList();
+          break;
+        }
+      }
+    });
+    mo.observe(el, { childList: true });
+  }
+
+  /* Hook into your language toggles so the list updates immediately */
+  function hookToggles() {
+    if (typeof window.applyHindi === 'function' && !window.applyHindi.__hooked) {
+      var _hi = window.applyHindi;
+      window.applyHindi = function () {
+        var r = _hi.apply(this, arguments);
+        translateAndSanitizeList();
+        return r;
+      };
+      window.applyHindi.__hooked = true;
+    }
+    if (typeof window.applyEnglish === 'function' && !window.applyEnglish.__hooked) {
+      var _en = window.applyEnglish;
+      window.applyEnglish = function () {
+        var r = _en.apply(this, arguments);
+        if (typeof window.renderNotifications === 'function') { window.renderNotifications(); }
+        return r;
+      };
+      window.applyEnglish.__hooked = true;
+    }
+  }
+
+  /* Init now and on DOM ready (works no matter where this script sits) */
+  patchRender();
+  translateAndSanitizeList();
+  watchList();
+  hookToggles();
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      patchRender();
+      translateAndSanitizeList();
+      watchList();
+      hookToggles();
+    });
+  }
+})();
+</script>
+
+
+
 
 
 </html>
