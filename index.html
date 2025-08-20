@@ -2878,8 +2878,10 @@ function applyHindi(){
   qsa('.btn-apply, .desktop-apply.btn-apply, .mobile-apply .btn-apply').forEach(function(b){ b.textContent = HI.applyNow; });
   var heroCTAButton = qs('.btn-apply-now'); if (heroCTAButton) heroCTAButton.textContent = HI.applyNow;
 
-  // Notification slider (first 3)
-  qsa('.jyp-notification-track .jyp-notification-item').slice(0,3).forEach(function(a,i){ if(HI.notifSlider[i]) a.textContent = HI.notifSlider[i]; });
+  // Notification slider (all content)
+  const items = qsa('.jyp-notification-track .jyp-notification-item');
+items.forEach((a,i) => { if (HI.notifSlider[i]) a.innerHTML = HI.notifSlider[i]; });
+
 
   // Hero content
   var hero = qs('.hero-text');
@@ -3017,7 +3019,9 @@ function applyEnglish(){
   var heroCTAButton = qs('.btn-apply-now'); if (heroCTAButton) heroCTAButton.textContent = EN_CACHE.applyNowCTA;
 
   // Notif slider
-  qsa('.jyp-notification-track .jyp-notification-item').slice(0,3).forEach(function(a,i){ if(EN_CACHE.notifSlider && EN_CACHE.notifSlider[i]) a.innerHTML = EN_CACHE.notifSlider[i]; });
+  const items = qsa('.jyp-notification-track .jyp-notification-item');
+items.forEach((a,i) => { if (HI.notifSlider[i]) a.innerHTML = HI.notifSlider[i]; });
+
 
   // Hero
   var hero = qs('.hero-text');
