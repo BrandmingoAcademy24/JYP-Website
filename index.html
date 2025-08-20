@@ -1986,16 +1986,16 @@ For participation in debate competition following procedure is to be followed
   });
   
     // Example: Dynamically pushing new notifications (simulate backend)
-  setTimeout(() => {
-    const track = document.getElementById('jypNotificationTrack');
-    const newItem = document.createElement('a');
-    newItem.href = 'https://youthparliament.in/photos';
-    newItem.className = 'jyp-notification-item';
-    newItem.target = '_blank';
-    newItem.textContent = '📸 Photo Gallery 2024 now available — relive the moments!';
-    track.appendChild(newItem.cloneNode(true)); // Repeat to preserve loop animation
-    track.appendChild(newItem);
-  }, 6000);
+  // setTimeout(() => {
+  //   const track = document.getElementById('jypNotificationTrack');
+  //   const newItem = document.createElement('a');
+  //   newItem.href = 'https://youthparliament.in/photos';
+  //   newItem.className = 'jyp-notification-item';
+  //   newItem.target = '_blank';
+  //   newItem.textContent = '📸 Photo Gallery 2024 now available — relive the moments!';
+  //   track.appendChild(newItem.cloneNode(true)); // Repeat to preserve loop animation
+  //   track.appendChild(newItem);
+  // }, 6000);
   
   // Notification section
   const notifications = [
@@ -2022,7 +2022,7 @@ For participation in debate competition following procedure is to be followed
  
   ];
 
-  let visibleCount = 6;
+  let visibleCount = 4;
 
   function renderNotifications() {
     const listContainer = document.getElementById('jypNotificationList');
@@ -2056,14 +2056,14 @@ For participation in debate competition following procedure is to be followed
   renderNotifications();
 
 
-  setTimeout(() => {
-    notifications.unshift({
-      // message: '🆕 Last Minute Addition: Special guest panel on India@2047 announced!',
-      url: 'https://youthparliament.in/india2047',
-      date: '1st Aug 2025'
-    });
-    renderNotifications();
-  }, 5000);
+  // setTimeout(() => {
+  //   notifications.unshift({
+  //     message: '🆕 Last Minute Addition: Special guest panel on India@2047 announced!',
+  //     url: 'https://youthparliament.in/india2047',
+  //     date: '1st Aug 2025'
+  //   });
+  //   renderNotifications();
+  // }, 5000);
   
  
   document.querySelectorAll('.jyp-faq-question').forEach(button => {
