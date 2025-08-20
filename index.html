@@ -2416,7 +2416,7 @@ function applyHindi(){
   const heroApplyNowCTA = qs('.btn-apply-now'); if (heroApplyNowCTA) heroApplyNowCTA.textContent = HI.applyNow;
 
   /* Notif slider (first 3) */
-  qsa('.jyp-notification-track .jyp-notification-item').slice(0,3).forEach((a,i)=> a.textContent = HI.notifSlider[i] || a.textContent);
+  qsa('.jyp-notification-track .jyp-notification-item').slice(0,5).forEach((a,i)=> a.textContent = HI.notifSlider[i] || a.textContent);
 
   /* Hero content */
   const hero = qs('.hero-text');
