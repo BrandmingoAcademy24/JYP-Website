@@ -2539,7 +2539,9 @@ function applyEnglish(){
   const heroApplyNowCTA = qs('.btn-apply-now'); if (heroApplyNowCTA) heroApplyNowCTA.textContent = EN_CACHE.applyNowCTA;
 
   /* Notif slider restore */
-  qsa('.jyp-notification-track .jyp-notification-item').slice(0,5).forEach((a,i)=> { if (EN_CACHE.notifSlider[i]) a.innerHTML = EN_CACHE.notifSlider[i]; });
+  const items = qsa('.jyp-notification-track .jyp-notification-item');
+items.forEach((a,i) => { if (HI.notifSlider[i]) a.innerHTML = HI.notifSlider[i]; });
+
 
   /* Hero */
   const hero = qs('.hero-text');
